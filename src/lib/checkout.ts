@@ -70,9 +70,14 @@ export async function startCheckout(
       },
     );
     url = session.checkout_url;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to create Bachs Checkout Session", error);
-    return { error: "We could not start checkout. Please try again." };
+    const message = error?.body?.detail || error?.message;
+    return {
+      error: message
+        ? `Checkout error: ${message}`
+        : "We could not start checkout. Please try again.",
+    };
   }
 
   if (!url) return { error: "We could not start checkout. Please try again." };

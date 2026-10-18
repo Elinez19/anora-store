@@ -64,7 +64,24 @@ export function webhookSecret(): string {
 
 /** Absolute origin for Bachs return URLs. */
 export function appUrl(): string {
+  // If hosted on Vercel, prioritize VERCEL_PROJECT_PRODUCTION_URL or VERCEL_URL
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`.replace(/\/$/, "");
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
+  }
+
   const url = process.env.NEXT_PUBLIC_APP_URL?.trim();
-  if (!url) throw new Error("NEXT_PUBLIC_APP_URL is not set.");
-  return url.replace(/\/$/, "");
+  if (url && !url.includes("localhost") && !url.includes("127.0.0.1")) {
+    return url.replace(/\/$/, "");
+  }
+
+  // Fallback if defined
+  if (url) {
+    return url.replace(/\/$/, "");
+  }
+
+  throw new Error("NEXT_PUBLIC_APP_URL is not set.");
 }
+
