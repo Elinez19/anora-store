@@ -28,7 +28,7 @@ export default async function Home() {
       <main className="flex-1">
         {/* --- Hero: one image, one headline, held to the lower-left ------- */}
         <section className="relative isolate">
-          <div className="relative h-[78svh] min-h-[32rem] w-full lg:h-[86svh]">
+          <div className="relative h-[78svh] min-h-128 w-full lg:h-[86svh]">
             <Image
               src={hero.image}
               alt={hero.alt}
@@ -40,7 +40,7 @@ export default async function Home() {
             {/* Scrim only where type sits, so the photograph stays a photograph */}
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"
+              className="absolute inset-0 bg-linear-to-t from-black/55 via-black/10 to-transparent"
             />
           </div>
 
@@ -83,13 +83,13 @@ export default async function Home() {
                   href={`/collections/${collection.slug}`}
                   className="group block"
                 >
-                  <div className="media-frame aspect-[2/3]">
+                  <div className="media-frame aspect-look">
                     <Image
                       src={collection.image}
                       alt={collection.alt}
                       fill
                       sizes="(min-width: 48rem) 31vw, 92vw"
-                      className="transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.03]"
+                      className="transition-transform duration-700 ease-out-soft group-hover:scale-[1.03]"
                     />
                   </div>
                   <div className="stack-sm mt-5 flex-row items-baseline justify-between">
@@ -125,7 +125,7 @@ export default async function Home() {
         {/* --- Atelier story: image and text, equal weight ---------------- */}
         <section id="atelier" className="container-page section">
           <div className="grid-split">
-            <div className="media-frame aspect-[4/5]">
+            <div className="media-frame aspect-4/5">
               <Image
                 src={atelier.image}
                 alt={atelier.alt}
