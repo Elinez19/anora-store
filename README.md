@@ -1,167 +1,268 @@
 <div align="center">
   <br />
-    <a href="https://youtu.be/u2QqWkMv3Lg" target="_blank">
-      <img src="public/readme/readme-hero.webp" alt="Project Banner">
-    </a>
+  <a href="https://github.com/Elinez19/anora-store">
+    <img src="public/readme/readme-hero.webp" alt="Anoralite Store Banner" width="100%" style="border-radius: 8px;">
+  </a>
+  <br />
   <br />
 
   <div>
-
-<img src="https://img.shields.io/badge/-Claude%20Code-D97706?style=for-the-badge&logo=anthropic&logoColor=white" />
-<img src="https://img.shields.io/badge/-Next.js-black?style=for-the-badge&logo=Next.js&logoColor=white" />
-<img src="https://img.shields.io/badge/-CodeRabbit-FF4500?style=for-the-badge&logo=coderabbit&logoColor=white" />
-<br/>
-<img src="https://img.shields.io/badge/-Neon-00E599?style=for-the-badge&logo=neon&logoColor=black" />
-<img src="https://img.shields.io/badge/-PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white" />
-<img src="https://img.shields.io/badge/-Drizzle%20ORM-C5F74F?style=for-the-badge&logo=drizzle&logoColor=black" />
-<br/>
-<img src="https://img.shields.io/badge/-Tailwind%20CSS-06B6D4?style=for-the-badge&logo=Tailwind-CSS&logoColor=white" />
-<img src="https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white" />
-
+    <img src="https://img.shields.io/badge/Next.js%2016-black?style=for-the-badge&logo=Next.js&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/React%2019-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React 19" />
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Tailwind%20CSS%20v4-06B6D4?style=for-the-badge&logo=Tailwind-CSS&logoColor=white" alt="Tailwind CSS" />
+    <br/>
+    <img src="https://img.shields.io/badge/Neon%20Postgres-00E599?style=for-the-badge&logo=neon&logoColor=black" alt="Neon" />
+    <img src="https://img.shields.io/badge/Drizzle%20ORM-C5F74F?style=for-the-badge&logo=drizzle&logoColor=black" alt="Drizzle ORM" />
+    <img src="https://img.shields.io/badge/Better%20Auth-4F46E5?style=for-the-badge&logo=auth0&logoColor=white" alt="Better Auth" />
+    <img src="https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe" />
+    <img src="https://img.shields.io/badge/Resend-000000?style=for-the-badge&logo=resend&logoColor=white" alt="Resend" />
   </div>
 
-  <h3 align="center">Build a Luxury Brand Storefront with Claude Code</h3>
+  <h2 align="center">Anoralite — Premium Computer Gadgets & Accessories</h2>
 
-   <div align="center">
-     Build this project step by step with our detailed tutorial on <a href="https://www.youtube.com/watch?v=XUkNR-JfHwo" target="_blank"><b>JavaScript Mastery</b></a> YouTube. Join the JSM family!
-    </div>
+  <p align="center">
+    A high-performance full-stack e-commerce platform and administrative ecosystem engineered for computer gadgets, laptops, desktops, wearables, and high-end tech accessories.
+  </p>
+
+  <p align="center">
+    <a href="#-key-features">Features</a> •
+    <a href="#%EF%B8%8F-tech-stack">Tech Stack</a> •
+    <a href="#-quick-start">Quick Start</a> •
+    <a href="#-database--seeding">Database</a> •
+    <a href="#-admin-portal">Admin Portal</a> •
+    <a href="#-environment-variables">Configuration</a>
+  </p>
 </div>
 
-## 📋 <a name="table">Table of Contents</a>
+---
 
-1. ✨ [Introduction](#introduction)
-2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
-4. 🤸 [Quick Start](#quick-start)
-5. 🔗 [Assets](#links)
-6. 🚀 [More](#more)
+## 📋 <a name="table-of-contents">Table of Contents</a>
 
-## 🚨 Tutorial
+1. [✨ Introduction](#-introduction)
+2. [⚙️ Tech Stack](#%EF%B8%8F-tech-stack)
+3. [🔋 Key Features](#-key-features)
+4. [🛡️ Admin Portal](#-admin-portal)
+5. [🤸 Quick Start](#-quick-start)
+6. [🔐 Environment Variables](#-environment-variables)
+7. [🗄️ Database & Seeding](#-database--seeding)
+8. [📜 Available Scripts](#-available-scripts)
+9. [🔒 Security & Role-Based Access](#-security--role-based-access)
 
-This repository contains the code corresponding to an in-depth tutorial available on our YouTube channel, <a href="https://www.youtube.com/@javascriptmastery/videos" target="_blank"><b>JavaScript Mastery</b></a>.
+---
 
-If you prefer visual learning, this is the perfect resource for you. Follow our tutorial to learn how to build projects like these step-by-step in a beginner-friendly manner!
+## ✨ <a name="introduction">Introduction</a>
 
-<a href="https://youtu.be/u2QqWkMv3Lg" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/1736fca5-a031-4854-8c09-bc110e3bc16d" /></a>
+**Anoralite** is a modern, responsive e-commerce web application engineered with **Next.js 16**, **React 19**, **Drizzle ORM**, and **Neon Serverless PostgreSQL**. Designed specifically for tech enthusiasts and modern professionals, Anoralite features a curated catalogue spanning high-performance workstations, ultrabooks, AI wearables, and accessories.
 
-## <a name="introduction">✨ Introduction</a>
+Beyond a beautiful storefront, Anoralite provides a complete operational backend featuring:
+- **Resilient Shopping Architecture**: Seamless guest and authenticated cart synchronization.
+- **Secure Financial Flow**: Stripe Checkout Session lifecycle with webhook idempotency.
+- **Enterprise Customer Support Desk**: Built-in support ticketing with two-way email synchronization via Resend.
+- **Marketing Automation**: Newsletter subscriptions and segment broadcasting.
+- **Full Operational Admin Suite**: Real-time sales telemetry, order fulfillment, product & collection editors, and customer directory.
 
-A luxury e-commerce application built with Claude Code and PostgreSQL! Claude Code manages your codebase using CLAUDE.md project rules, Plan Mode for safe database migrations, and sandboxed permissions for security. Features a high-end luxury design system, custom reusable Skills, and parallel subagents tailored for developers who want to master real AI orchestration.
+---
 
-If you're getting started and need assistance or face any bugs, join our active Discord community with over **50k+** members. It's a place where people help each other out.
+## ⚙️ <a name="tech-stack">Tech Stack</a>
 
-<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" /></a>
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Framework** | [Next.js 16](https://nextjs.org/) (App Router, Server Actions) | Full-stack architecture, SSR/SSG rendering, and server actions |
+| **Frontend** | [React 19](https://react.dev/) & [TypeScript](https://www.typescriptlang.org/) | Type-safe UI components and concurrent client state |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) | Cutting-edge utility styling with customized typography system (`Inter` & `Plus Jakarta Sans`) |
+| **Database** | [Neon Postgres](https://neon.tech/) | Serverless PostgreSQL with connection pooling |
+| **ORM** | [Drizzle ORM](https://orm.drizzle.team/) | End-to-end type-safe SQL query generation and schema migrations |
+| **Authentication** | [Better Auth](https://www.better-auth.com/) | Secure cookie sessions, password hashing, and role-based permissions |
+| **Payments** | [Stripe](https://stripe.com/) | Hosted checkout sessions, customer portal, and verified webhook idempotency |
+| **Email & Marketing** | [Resend](https://resend.com/) | Transactional emails, support ticket reply delivery, and newsletter campaigns |
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
+---
 
-- **[Better Auth](https://www.better-auth.com/)** is a framework-agnostic authentication and authorization library for TypeScript. It provides built-in support for email and password authentication, social sign-on (Google, GitHub, Apple, and more), and multi-factor authentication, simplifying user authentication and account management.
+## 🔋 <a name="key-features">Key Features</a>
 
-- **[Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview)** is an agentic command-line tool by Anthropic that assists developers directly inside the terminal. It can understand codebase context, edit files, execute commands, run tests, and manage Git workflows to automate complex software engineering tasks using natural language.
+### 💻 Modern Tech Storefront
+- **Categorized Browsing**: Dynamic filtering and navigation for **Laptops**, **Desktops**, **Smart Gadgets**, and **Accessories**.
+- **Interactive Product Galleries**: Multi-perspective product photography with interactive carousel and thumbnail scroll controls.
+- **Real-Time Stock Availability**: Derived stock indicators (`In Stock`, `Low Stock`, `Made to Order`, `Sold Out`) with live quantity tracking.
+- **Specs & Details**: Structured technical spec sheets and care guides embedded directly in product pages.
+- **Pricing & Discounts**: Clear MSRP comparisons (`compareAtPrice`) and promotion badges (`Save ₦...`).
 
-- **[CodeRabbit](https://jsm.dev/claude-coderabbit)** is an AI-driven code review platform that integrates directly with pull requests on GitHub and GitLab. It provides line-by-line code reviews, summaries, potential bug detection, and automated test generation to accelerate code reviews and improve overall software quality.
+### 🛒 Flexible Bag & Cart System
+- **Dual-Mode Persistence**: Unauthenticated visitors can add items via cookie-backed guest carts; registered customers maintain database-synced bags.
+- **Live Price Verification**: Prices are dynamically recalculated against current database records to prevent stale client submissions.
 
-- **[Drizzle ORM](https://orm.drizzle.team/docs/overview)** is a lightweight and performant TypeScript ORM designed with developer experience in mind. It provides a seamless interface between application code and database operations while maintaining high performance and reliability.
+### 💳 Stripe Checkout & Order Safeguards
+- **Hosted Checkout**: Secure Stripe payment processing with support for multiple payment methods.
+- **Webhook Idempotency**: Resilient webhook listener preventing duplicate order creation across concurrent payment updates.
+- **Denormalized Receipts**: Historical purchases retain snapshot records of unit prices, product names, SKUs, and imagery as they were at the instant of transaction.
 
-- **[Neon](https://neon.com/)** is a fully managed, serverless PostgreSQL database platform. It offers features like instant provisioning, autoscaling, and database branching, enabling developers to build scalable applications without managing infrastructure.
+### 👤 Customer Experience & Portal
+- **Account Dashboard**: Personal profile overview, shipping information, and order tracking.
+- **Order Receipts**: Detailed itemized invoice breakdown with fulfillment states (`paid`, `fulfilled`, etc.).
+- **Customer Support**: Direct contact form generating trackable support tickets.
 
-- **[Next.js](https://nextjs.org/docs)** is a powerful React framework for building full-stack web applications. It simplifies development with features like server-side rendering, static site generation, and API routes, enabling developers to focus on building products and shipping quickly.
+---
 
-- **[PostgreSQL](https://www.postgresql.org/)** is a powerful, open-source relational database system known for its reliability, data integrity, and robust feature set. It supports advanced data types, full ACID compliance, and extensibility, making it suitable for a wide range of applications.
+## 🛡️ <a name="admin-portal">Admin Portal (`/admin`)</a>
 
-- **[TypeScript](https://www.typescriptlang.org/)** is a superset of JavaScript that adds static typing, providing better tooling, code quality, and error detection for developers. It is ideal for building large-scale applications and enhances the development experience.
+The administrative control center offers store owners a comprehensive workspace protected by role-based access control (RBAC):
 
-- **[Tailwind CSS](https://tailwindcss.com/)** is a utility-first CSS framework designed for rapidly building custom user interfaces. Instead of providing pre-styled components, it offers low-level utility classes for layout, typography, color, and spacing directly within your markup, streamlining styling and enforcing consistent design systems.
+1. **Telemetry & KPI Dashboard** (`/admin`):
+   - Real-time revenue, total order volume, and active customer counts.
+   - Quick activity feeds showing recent transactions and support requests.
+2. **Product Catalog Manager** (`/admin/products`):
+   - Create, edit, and archive products.
+   - Configure pricing, compare-at discounts, SKU designations, colors, and stock levels.
+   - Manage multi-image upload galleries and gallery positioning.
+3. **Category Management** (`/admin/categories`):
+   - Manage collections, display positions, and landing page collection strips.
+4. **Order Fulfillment** (`/admin/orders`):
+   - Review incoming customer purchases, payment confirmations, and update fulfillment states.
+5. **Customer Directory** (`/admin/customers`):
+   - Search customer accounts, review registration dates, and inspect purchase histories.
+6. **Email Marketing & Broadcasts** (`/admin/marketing`):
+   - Monitor newsletter subscribers.
+   - Compose and send marketing newsletters and promotional announcements via Resend.
+7. **Support Helpdesk** (`/admin/support`):
+   - Track open, in-progress, and resolved support tickets.
+   - Respond directly to customer inquiries; outgoing replies automatically dispatch formatted emails via Resend.
 
+---
 
-## <a name="features">🔋 Features</a>
+## 🤸 <a name="quick-start">Quick Start</a>
 
-👉 **Landing Page**: A fast, engaging homepage for a luxury storefront that introduces your brand and products, serving as the starting point to learn how Claude Code reads and navigates your codebase.
+Follow these instructions to clone, configure, and launch the application locally.
 
-👉 **Design System & Components**: A structured set of UI components where you learn how permissions control what files, environment variables, and tools your agent can access.
+### Prerequisites
 
-👉 **Auth Pages**: Secure and seamless user signup, login, and password recovery powered by Better Auth, demonstrating how to guide your agent through sensitive security integrations.
-
-👉 **Database Setup & Products**: Product listing and detail pages backed by PostgreSQL (Neon), built using Claude Code’s Plan Mode to architect and approve complex database schemas before executing code.
-
-👉 **Reusable Workflows (Skills)**: Interactive features—like cart management with Zustand—used to transform repetitive development processes into reusable Claude Code Skills.
-
-👉 **Advanced Architecture & Subagents**: Complex workflows (order processing, review features, and deep codebase investigations) divided across specialized subagents to prevent context overload.
-
-And many more, including code architecture and reusability.
-
-## <a name="quick-start">🤸 Quick Start</a>
-
-Follow these steps to set up the project locally on your machine.
-
-**Prerequisites**
-
-Make sure you have the following installed on your machine:
-
+Ensure you have the following installed on your development machine:
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)
-- [npm](https://www.npmjs.com/) (Node Package Manager)
+- [Node.js](https://nodejs.org/en/) (v20+ recommended)
+- [npm](https://www.npmjs.com/)
 
-**Cloning the Repository**
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/adrianhajdin/atelier-store.git
-cd atelier-store
+git clone https://github.com/Elinez19/anora-store.git
+cd anora-store
 ```
 
-**Installation**
-
-Install the project dependencies using npm:
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-**Set Up Environment Variables**
+### 3. Configure Environment Variables
 
-Create a new file named `.env` in the root of your project and add the following content:
+Create a `.env` file in the project root:
 
-```env
-# Neon Postgres (https://console.neon.tech) - use the pooled connection string
-DATABASE_URL=""
-
-# Better Auth - generate with: openssl rand -base64 32
-BETTER_AUTH_SECRET=""
-BETTER_AUTH_URL="http://localhost:3000"
-
-# Public app URL (client-side)
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-
-STRIPE_SECRET_KEY=""
-STRIPE_WEBHOOK_SECRET=""
+```bash
+cp .env.example .env
 ```
 
-Replace the placeholder values with your real credentials. You can get these by signing up at:
-- **Neon Postgres:** [neon.tech](https://console.neon.tech)
-- **Stripe:** [dashboard.stripe.com](https://dashboard.stripe.com)
+Populate the values inside `.env` with your service credentials (see [Environment Variables](#-environment-variables)).
 
-**Running the Project**
+---
+
+## 🔐 <a name="environment-variables">Environment Variables</a>
+
+Here is a breakdown of the required environment variables:
+
+```env
+# Database (Neon Serverless Postgres - Pooled connection string)
+DATABASE_URL="postgresql://user:password@ep-sample-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
+
+# Better Auth Authentication
+# Generate with: openssl rand -base64 32
+BETTER_AUTH_SECRET="your-32-byte-base64-secret"
+BETTER_AUTH_URL="http://localhost:3000"
+
+# Application URL
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+# Admin Access Control (comma-separated list of emails granted /admin access)
+ADMIN_EMAILS="admin@anorastore.com,owner@anorastore.com"
+
+# Stripe Payments
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_WEBHOOK_SECRET="whsec_..."
+
+# Resend Email & Communications
+RESEND_API_KEY="re_..."
+RESEND_FROM_EMAIL="Anoralite <notifications@yourdomain.com>"
+RESEND_RECEIVING_EMAIL="support@yourdomain.com"
+RESEND_WEBHOOK_SECRET="whsec_..."
+RESEND_MARKETING_SEGMENT_ID=""
+```
+
+---
+
+## 🗄️ <a name="database--seeding">Database & Seeding</a>
+
+The database schema is managed via Drizzle ORM.
+
+### Push Schema to Neon Database
+```bash
+npm run db:push
+```
+
+### Seed Initial Gadgets Catalog
+Populate the database with default categories (Laptops, Desktops, Smart Gadgets, Accessories) and a rich catalog of products with high-resolution photography:
+
+```bash
+npm run db:seed
+```
+
+### Explore Database with Drizzle Studio
+Launch an interactive web UI to inspect and manage your tables:
+```bash
+npm run db:studio
+```
+
+---
+
+## 🚀 Running the Application
+
+Start the local development server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+Visit [http://localhost:3000](http://localhost:3000) in your browser to view the storefront.
 
-## <a name="links">🔗 Assets</a>
+To access the Admin Portal (`http://localhost:3000/admin`), sign up or sign in using an email defined in your `ADMIN_EMAILS` environment variable.
 
-Assets and snippets used in the project can be found in the **[video kit](https://jsm.dev/claude-kit)**.
+---
 
-<a href="https://jsm.dev/claude-kit" target="_blank">
-  <img src="public/readme/readme-videokit.webp" alt="Video Kit Banner">
-</a>
+## 📜 <a name="available-scripts">Available Scripts</a>
 
-## <a name="more">🚀 More</a>
+| Command | Description |
+| :--- | :--- |
+| `npm run dev` | Starts the Next.js development server with hot-reload |
+| `npm run build` | Compiles the production build |
+| `npm run start` | Boots the compiled Next.js production server |
+| `npm run lint` | Runs ESLint to check for code quality and syntax issues |
+| `npm run db:generate`| Generates migration files based on schema changes |
+| `npm run db:migrate` | Runs pending Drizzle migrations against the database |
+| `npm run db:push` | Directly synchronizes the schema with the database |
+| `npm run db:studio` | Launches Drizzle Studio in the browser |
+| `npm run db:seed` | Runs `scripts/seed.ts` to populate demo categories and products |
 
-**Advance your skills with Next.js Pro Course**
+---
 
-Enjoyed creating this project? Dive deeper into our PRO courses for a richer learning adventure. They're packed with
-detailed explanations, cool features, and exercises to boost your skills. Give it a go!
+## 🔒 <a name="security--role-based-access">Security & Role-Based Access</a>
 
-<a href="https://jsm.dev/claude-engineer" target="_blank">
-  <img src="public/readme/readme-jsmpro.webp" alt="Project Banner">
-</a>
+- **Session Security**: Better Auth issues HTTP-only, secure cookies with cryptographic signatures.
+- **Admin Verification**: Access to `/admin` routes and sensitive actions is verified on every request using `ADMIN_EMAILS` whitelist checks and role validation.
+- **Payment Verification**: Stripe webhooks utilize cryptographic signature verification with the `STRIPE_WEBHOOK_SECRET` before processing order records.
+- **Price Tamper Resistance**: Cart checkouts recalculate totals exclusively on the server directly from active catalog database entries.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
