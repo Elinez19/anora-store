@@ -116,10 +116,11 @@ export function ModernCheckoutView({
           <div className="lg:col-span-7 space-y-8">
             {/* Top Brand Logo */}
             <div className="pb-4">
-              <Link href="/" className="inline-block">
-                <span className="font-serif italic font-bold text-2xl tracking-tight text-neutral-900">
-                  Shopinverse
+              <Link href="/" className="inline-flex items-center gap-1.5">
+                <span className="text-neutral-950 font-black tracking-tight text-2xl">
+                  ANORALITE
                 </span>
+                <span className="size-2 rounded-full bg-rose-500"></span>
               </Link>
             </div>
 
@@ -371,7 +372,7 @@ export function ModernCheckoutView({
 
                 <div className="border border-neutral-300 rounded-lg overflow-hidden">
                   <div className="flex items-center justify-between p-3.5 bg-neutral-50 border-b border-neutral-200">
-                    <span className="text-xs font-bold text-neutral-900">Paystack</span>
+                    <span className="text-xs font-bold text-neutral-900">Cards &amp; Bank Transfer</span>
                     <div className="flex items-center gap-1.5">
                       <span className="px-1.5 py-0.5 rounded bg-red-600 text-white font-black text-[9px]">MC</span>
                       <span className="px-1.5 py-0.5 rounded bg-blue-600 text-white font-bold text-[9px]">VISA</span>
@@ -380,7 +381,7 @@ export function ModernCheckoutView({
                     </div>
                   </div>
                   <div className="p-6 text-center text-xs text-neutral-600 bg-neutral-50/30">
-                    You&apos;ll be redirected to Paystack to complete your purchase
+                    You&apos;ll be redirected to complete your purchase securely.
                   </div>
                 </div>
               </div>

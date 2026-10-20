@@ -7,7 +7,7 @@ import { ModernCheckoutView } from "@/components/modern-checkout-view";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Checkout | Shopinverse",
+  title: "Checkout | Anoralite",
 };
 
 export default async function CheckoutPage() {

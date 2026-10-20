@@ -19,7 +19,7 @@ import { getCurrentUser } from "@/lib/session";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Your cart | Shopinverse",
+  title: "Your cart | Anoralite",
 };
 
 export default async function BagPage({ searchParams }: PageProps<"/bag">) {
