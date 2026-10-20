@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Suspense } from "react";
 
 import {
@@ -7,6 +8,7 @@ import {
 import { BagCount, BagCountFallback } from "@/components/bag-count";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getCurrentAdminUser } from "@/lib/admin";
 import { signOutAction } from "@/lib/auth-actions";
 import { monthYear } from "@/lib/format";
 import { requireUser } from "@/lib/session";
@@ -24,6 +26,7 @@ export const metadata = {
 
 export default async function AccountPage() {
   const user = await requireUser("/account");
+  const adminUser = await getCurrentAdminUser();
 
   return (
     <>
@@ -63,6 +66,26 @@ export default async function AccountPage() {
               </dd>
             </div>
           </dl>
+
+          {/* Admin Dashboard Entrypoint */}
+          {adminUser?.isAdmin && (
+            <div className="p-4 rounded-xl bg-zinc-950 text-white flex items-center justify-between border border-zinc-800 shadow-md">
+              <div>
+                <div className="text-xs font-mono uppercase tracking-wider text-cyan-400">
+                  Staff Access
+                </div>
+                <div className="font-bold text-sm text-white mt-0.5">
+                  Admin Control Studio
+                </div>
+              </div>
+              <Link
+                href="/admin"
+                className="px-4 py-2 rounded-lg bg-white text-zinc-950 text-xs font-bold hover:bg-zinc-200 transition"
+              >
+                Open Studio →
+              </Link>
+            </div>
+          )}
 
           {/* A plain form, so signing out needs no JavaScript. */}
           <form action={signOutAction}>

@@ -18,6 +18,7 @@ export const user = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
+  role: text("role").default("customer").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -250,6 +251,7 @@ export const orders = pgTable(
     /** What Stripe reported it charged. Never recomputed from the lines. */
     totalCents: integer("total_cents").notNull(),
     currency: text("currency").default("usd").notNull(),
+    fulfillmentStatus: text("fulfillment_status").default("paid").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
