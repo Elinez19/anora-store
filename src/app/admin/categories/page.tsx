@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { getAdminCategories } from "@/lib/admin-data";
 import { saveCategoryAction } from "@/lib/admin-actions";
-import { DeleteCategoryButton } from "@/components/admin/delete-category-button";
+import { CollectionsTable } from "@/components/admin/collections-table";
 
 export const dynamic = "force-dynamic";
 
@@ -27,74 +26,8 @@ export default async function AdminCategoriesPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Categories List (2 cols) */}
-        <div className="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-2xl border border-zinc-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] overflow-hidden text-zinc-950">
-          <div className="p-6 border-b border-zinc-100 flex items-center justify-between">
-            <h2 className="font-bold text-base text-zinc-950 font-sans">
-              Active Store Categories ({categoriesList.length})
-            </h2>
-            <span className="text-xs font-mono text-zinc-400">Position Ordered</span>
-          </div>
-
-          <div className="divide-y divide-zinc-100">
-            {categoriesList.map((cat) => (
-              <div
-                key={cat.id}
-                className="p-5 flex items-center justify-between gap-4 hover:bg-zinc-50/80 transition-colors"
-              >
-                <div className="flex items-center gap-4">
-                  {cat.imageUrl ? (
-                    <img
-                      src={cat.imageUrl}
-                      alt={cat.name}
-                      className="w-14 h-14 rounded-xl object-cover bg-zinc-100 border border-zinc-200"
-                    />
-                  ) : (
-                    <div className="w-14 h-14 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center font-mono text-xs text-zinc-400">
-                      No hero
-                    </div>
-                  )}
-
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-sm text-zinc-950">
-                        {cat.name}
-                      </span>
-                      <span className="font-mono text-[10px] text-zinc-400">
-                        /{cat.slug}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-3 text-xs text-zinc-500 font-mono mt-1">
-                      <span>Position: #{cat.position}</span>
-                      <span>•</span>
-                      <span className="font-semibold text-zinc-800">
-                        {cat.pieceCount} {cat.pieceCount === 1 ? "product" : "products"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Link
-                    href={`/collections/${cat.slug}`}
-                    target="_blank"
-                    className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-950 hover:bg-zinc-100 transition"
-                    title="View Collection"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </Link>
-
-                  <DeleteCategoryButton
-                    categoryId={cat.id}
-                    categoryName={cat.name}
-                    disabled={cat.pieceCount > 0}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="lg:col-span-2">
+          <CollectionsTable categories={categoriesList} />
         </div>
 
         {/* Add Category Form (1 col) */}
