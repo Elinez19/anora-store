@@ -9,6 +9,11 @@ import {
   removeItem,
   setQuantity,
 } from "@/lib/cart";
+import {
+  addGuestCartItem,
+  removeGuestCartItem,
+  setGuestCartQuantity,
+} from "@/lib/cart-guest";
 import type { CartFormState } from "@/lib/cart-form-state";
 import { MAX_QUANTITY } from "@/lib/cart-types";
 import { getCurrentUser } from "@/lib/session";
@@ -67,22 +72,18 @@ export async function addToBag(
   const quantity = readQuantity(formData);
   if (!slug || !quantity) return { error: GENERIC_ERROR };
 
-  const currentUser = await getCurrentUser();
-
-  // There is no guest bag, so a signed-out visitor is sent to sign in and
-  // returned to the piece they were looking at. The redirect is issued below,
-  // outside any try/catch, because `redirect()` works by throwing.
-  if (!currentUser) {
-    redirect(`/sign-in?next=${encodeURIComponent(`/products/${slug}`)}`);
-  }
-
   const product = await getProductForBag(slug);
   if (!product) return { error: GENERIC_ERROR };
   if (stockState(product) === "sold_out") {
     return { error: "That piece is sold out." };
   }
 
-  await addItem(currentUser.id, product.id, quantity);
+  const currentUser = await getCurrentUser();
+  if (currentUser) {
+    await addItem(currentUser.id, product.id, quantity);
+  } else {
+    await addGuestCartItem(product.id, quantity);
+  }
 
   // Only the bag. Revalidating the product page would evict a statically
   // generated page for every visitor because one person added an item.
@@ -101,9 +102,11 @@ export async function updateBagQuantity(
   }
 
   const currentUser = await getCurrentUser();
-  if (!currentUser) redirect("/sign-in?next=%2Fbag");
-
-  await setQuantity(currentUser.id, productId, quantity);
+  if (currentUser) {
+    await setQuantity(currentUser.id, productId, quantity);
+  } else {
+    await setGuestCartQuantity(productId, quantity);
+  }
 
   revalidatePath("/bag");
   return { error: null };
@@ -117,9 +120,11 @@ export async function removeFromBag(
   if (!productId) return { error: "That piece could not be removed." };
 
   const currentUser = await getCurrentUser();
-  if (!currentUser) redirect("/sign-in?next=%2Fbag");
-
-  await removeItem(currentUser.id, productId);
+  if (currentUser) {
+    await removeItem(currentUser.id, productId);
+  } else {
+    await removeGuestCartItem(productId);
+  }
 
   revalidatePath("/bag");
   return { error: null };

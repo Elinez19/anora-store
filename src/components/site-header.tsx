@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { CartNavButton } from "@/components/cart-nav-button";
 import { primaryNav } from "@/lib/sample-data";
 
 /**
@@ -59,14 +60,15 @@ export function SiteHeader({
   }, [menuOpen]);
 
   return (
-    <header className="bg-paper sticky top-0 z-50">
-      <p className="type-caps text-ash border-hairline border-b py-3 text-center">
-        Complimentary delivery and returns
-      </p>
+    <header className="bg-paper/95 backdrop-blur-md sticky top-0 z-50 transition-shadow duration-200">
+      <div className="bg-neutral-900 text-white text-[11px] font-medium py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+        <span className="inline-block size-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Express 24h dispatch | 128 Days Certified Hardware Warranty on all gadgets</span>
+      </div>
 
       <div
-        className={`container-page relative flex items-center justify-between gap-4 py-5 lg:py-6 ${
-          scrolled ? "border-hairline border-b" : ""
+        className={`container-page relative flex items-center justify-between gap-4 py-4 lg:py-4.5 ${
+          scrolled ? "border-hairline border-b shadow-xs" : ""
         }`}
       >
         {/* Mobile: drawer trigger */}
@@ -82,10 +84,10 @@ export function SiteHeader({
 
         {/* Desktop: the catalogue lives to the left of the wordmark */}
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="type-caps flex items-center gap-8">
+          <ul className="flex items-center gap-6 text-xs font-semibold uppercase tracking-wider text-neutral-700">
             {primaryNav.map((item) => (
               <li key={item.label}>
-                <Link href={item.href} className="link-nav py-2">
+                <Link href={item.href} className="link-nav py-1 hover:text-black">
                   {item.label}
                 </Link>
               </li>
@@ -95,30 +97,70 @@ export function SiteHeader({
 
         <Link
           href="/"
-          className="type-wordmark absolute left-1/2 -translate-x-1/2 lg:static lg:left-auto lg:translate-x-0"
+          className="type-wordmark absolute left-1/2 -translate-x-1/2 lg:static lg:left-auto lg:translate-x-0 flex items-center gap-1.5"
         >
-          Atelier
+          <span className="text-neutral-950 font-black tracking-tight text-lg">ANORALITE</span>
+          <span className="size-1.5 rounded-full bg-rose-500"></span>
         </Link>
 
-        <ul className="type-caps -my-3 flex items-center gap-5 lg:gap-6">
-          <li className="hidden sm:block">
-            <a href="#" className="link-nav py-3">
-              Search
+        <ul className="type-caps -my-3 flex items-center gap-3 sm:gap-4 lg:gap-5">
+          <li className="hidden md:block">
+            <a href="#new-arrivals" className="link-nav py-3 text-neutral-600 hover:text-black">
+              Deals
             </a>
           </li>
-          <li className="hidden sm:block">
+          <li>
+            <Link
+              href="#wishlist"
+              className="link-nav flex items-center gap-1.5 py-3 text-neutral-700 hover:text-black transition-colors"
+              title="Wishlist"
+              aria-label="Wishlist"
+            >
+              <svg
+                className="size-4.5 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.8"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                />
+              </svg>
+              <span className="hidden sm:inline">Wishlist</span>
+            </Link>
+          </li>
+          <li>
             {account ?? (
-              <Link href="/account" className="link-nav py-3">
-                Account
+              <Link
+                href="/account"
+                className="link-nav flex items-center gap-1.5 py-3 text-neutral-700 hover:text-black transition-colors"
+                title="Account"
+                aria-label="Account"
+              >
+                <svg
+                  className="size-4.5 shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.8"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                  />
+                </svg>
+                <span className="hidden sm:inline">Account</span>
               </Link>
             )}
           </li>
           <li>
-            {bag ?? (
-              <Link href="/bag" className="link-nav py-3">
-                Bag
-              </Link>
-            )}
+            {bag ?? <CartNavButton />}
           </li>
         </ul>
       </div>
@@ -130,7 +172,7 @@ export function SiteHeader({
         className="bg-paper fixed inset-0 z-50 flex flex-col lg:hidden"
       >
         <div className="container-page border-hairline flex items-center justify-between border-b py-5">
-          <span className="type-wordmark">Atelier</span>
+          <span className="text-neutral-950 font-black tracking-tight text-lg">ANORALITE</span>
           <button
             type="button"
             className="type-caps text-ink -my-3 -mr-2 px-2 py-3"
@@ -160,17 +202,56 @@ export function SiteHeader({
               </a>
             </li>
             <li>
+              <Link
+                href="#wishlist"
+                className="text-ash flex items-center gap-2 py-1.5"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg
+                  className="size-4 text-neutral-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.8"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                  />
+                </svg>
+                <span>Wishlist</span>
+              </Link>
+            </li>
+            <li>
               {account ?? (
-                <Link href="/account" className="text-ash inline-block py-1">
-                  Account
+                <Link
+                  href="/account"
+                  className="text-ash flex items-center gap-2 py-1.5"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <svg
+                    className="size-4 text-neutral-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.8"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                  <span>Account</span>
                 </Link>
               )}
             </li>
             <li>
               {bag ?? (
-                <Link href="/bag" className="text-ash inline-block py-1">
-                  Bag
-                </Link>
+                <div onClick={() => setMenuOpen(false)}>
+                  <CartNavButton className="text-ash !py-1.5" />
+                </div>
               )}
             </li>
           </ul>

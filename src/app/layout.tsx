@@ -1,38 +1,37 @@
 import type { Metadata } from "next";
-import { Archivo, EB_Garamond } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-/* Display voice: a Garamond-lineage old-style serif, the closest open
-   counterpart to the Granjon-style wordmarks fashion houses use. */
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
+/* Display voice: modern, geometric, clean typography for tech brand */
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
 });
 
-/* Interface voice: a grotesque that holds its shape at 11–13px and takes
-   wide tracking cleanly in capitals — nav, buttons, prices, forms. */
-const archivo = Archivo({
-  variable: "--font-archivo",
+/* Interface voice: high-clarity sans for specs, nav, prices, buttons */
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Atelier",
-    template: "%s | Atelier",
+    default: "Anoralite | Premium Computer Gadgets & Accessories",
+    template: "%s | Anoralite",
   },
-  description: "Ready-to-wear, leather goods and accessories.",
+  description:
+    "Explore high-performance laptops, desktop workstations, AI smart glasses, smartwatches, and premium tech accessories.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${ebGaramond.variable} ${archivo.variable} h-full antialiased`}
+      className={`${jakarta.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="bg-paper text-graphite flex min-h-full flex-col">
+      <body className="bg-paper text-graphite flex min-h-full flex-col font-sans">
         {children}
       </body>
     </html>

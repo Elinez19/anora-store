@@ -34,5 +34,5 @@ export function proxy(request: NextRequest) {
  * record each one as a failed delivery.
  */
 export const config = {
-  matcher: ["/account/:path*", "/bag", "/checkout/:path*"],
+  matcher: ["/account/:path*"],
 };

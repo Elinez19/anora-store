@@ -6,7 +6,9 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
 import type { AuthFormState } from "@/lib/auth-form-state";
-import { safeNextPath } from "@/lib/session";
+import { mergeGuestCartToUser } from "@/lib/cart";
+import { clearGuestCart, getGuestCart } from "@/lib/cart-guest";
+import { getCurrentUser, safeNextPath } from "@/lib/session";
 
 /**
  * Sign up, sign in and sign out as Server Actions.
@@ -96,6 +98,20 @@ export async function signIn(
     throw error;
   }
 
+  // Merge any items from guest cart into the authenticated cart
+  try {
+    const guestItems = await getGuestCart();
+    if (guestItems.length > 0) {
+      const user = await getCurrentUser();
+      if (user) {
+        await mergeGuestCartToUser(user.id, guestItems);
+        await clearGuestCart();
+      }
+    }
+  } catch (err) {
+    console.error("Failed to merge guest cart on sign in", err);
+  }
+
   // Outside the try: `redirect()` works by throwing, and a catch above would
   // swallow it into an error state instead of navigating.
   redirect(safeNextPath(formData.get("next")));
@@ -147,6 +163,20 @@ export async function signUp(
       return { error: "Please enter a valid email address." };
     }
     return { error: GENERIC_ERROR };
+  }
+
+  // Merge any items from guest cart into the authenticated cart
+  try {
+    const guestItems = await getGuestCart();
+    if (guestItems.length > 0) {
+      const user = await getCurrentUser();
+      if (user) {
+        await mergeGuestCartToUser(user.id, guestItems);
+        await clearGuestCart();
+      }
+    }
+  } catch (err) {
+    console.error("Failed to merge guest cart on sign up", err);
   }
 
   redirect(safeNextPath(formData.get("next")));

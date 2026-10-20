@@ -13,7 +13,7 @@ import { safeNextPath } from "@/lib/session";
 
 export const metadata = {
   title: "Create an account",
-  description: "Create an Atelier account.",
+  description: "Create an Anoraa account.",
 };
 
 export default async function SignUpPage({ searchParams }: PageProps<"/sign-up">) {

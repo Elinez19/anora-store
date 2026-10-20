@@ -48,8 +48,7 @@ export default async function NewArrivalsPage() {
             <p className="type-caps text-ash">{hero.season}</p>
             <h1>New arrivals</h1>
             <p className="type-lead max-w-prose">
-              The newest pieces to leave the bench, listed as they arrive —
-              cut, stitched and finished in our own workshops.
+              The latest certified laptops, desktops, and smart gadgets to join our inventory — fully tested, inspected, and backed by hardware warranty.
             </p>
           </div>
         </header>

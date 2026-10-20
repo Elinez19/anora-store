@@ -1,96 +1,85 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Atelier — global design system
-   Reference language: contemporary luxury fashion retail (gucci.com et al.)
-   Principles: paper-white canvas, photography carries the page, chrome is
-   hairline-thin, type is either a large Renaissance serif or small capitals
-   with wide tracking. Nothing is rounded. Nothing has a shadow.
+   Anoralite — Modern Tech Design System
+   Reference language: Premium glossy white, precision computer gadgets & accessories
+   Principles: Glossy pure white canvas, soft neutral borders, high-clarity sans type,
+   subtle depth and sheen, crisp spec badges, and tech-forward micro-interactions.
    ========================================================================== */
 
 @theme inline {
-  /* --- Color -------------------------------------------------------------
-     A near-monochrome palette. Ink on paper, three greys, one bottle green
-     borrowed from the house-ribbon tradition, one oxblood reserved for
-     markdowns. Colors are never decorative here. */
-  --color-paper: #ffffff; /* page canvas */
-  --color-bone: #f6f4f1; /* alternating band / product image backdrop */
-  --color-ink: #000000; /* headings, primary actions */
-  --color-graphite: #3d3b38; /* body copy */
-  --color-ash: #6e6a65; /* meta, captions, placeholders */
-  --color-hairline: #dcd8d3; /* all rules and input borders */
-  --color-ribbon: #1e4437; /* single accent: badges, focus ring */
-  --color-oxblood: #8c2b28; /* markdowns and stock warnings only */
+  /* --- Color ------------------------------------------------------------- */
+  --color-paper: #ffffff; /* pure glossy white canvas */
+  --color-bone: #f8fafc; /* crisp subtle tech container fill */
+  --color-surface-gloss: rgba(255, 255, 255, 0.85); /* glossy frosted glass */
+  --color-ink: #09090b; /* deep obsidian black for headings and primary actions */
+  --color-graphite: #27272a; /* body copy */
+  --color-ash: #71717a; /* specs, meta, captions */
+  --color-hairline: #e4e4e7; /* subtle clean borders */
+  --color-ribbon: #0284c7; /* tech accent: cyan/blue focus & highlights */
+  --color-oxblood: #ef4444; /* savings & discount badges / alert states */
+  --color-badge-red: #f43f5e;
+  --color-emerald: #10b981;
 
   --color-background: var(--color-paper);
   --color-foreground: var(--color-ink);
 
-  /* --- Type --------------------------------------------------------------
-     Two families, clearly distinct in build: a Garamond-lineage serif for
-     display (the Granjon-ish voice of the wordmark) and a grotesque for
-     every functional surface — nav, buttons, prices, forms. */
-  --font-display: var(--font-eb-garamond), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-archivo), "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
+  /* --- Type -------------------------------------------------------------- */
+  --font-display: var(--font-display), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* Modular scale, 1.25 from a 16px body. Display sizes are fluid so a
-     hero headline stays a headline at 390px and at 1920px. */
-  --text-2xs: 0.6875rem; /* 11px — legal, badges */
-  --text-xs: 0.75rem; /* 12px — nav, buttons, eyebrows */
-  --text-sm: 0.8125rem; /* 13px — product meta, prices */
-  --text-base: 1rem; /* 16px — body */
-  --text-lg: 1.125rem; /* 18px — lead paragraph */
-  --text-xl: clamp(1.25rem, 0.5vw + 1.13rem, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1vw + 1.25rem, 2rem);
-  --text-3xl: clamp(1.875rem, 2vw + 1.4rem, 2.75rem);
-  --text-4xl: clamp(2.25rem, 3.5vw + 1.4rem, 4rem);
-  --text-display: clamp(2.75rem, 7vw + 1rem, 7.5rem); /* hero only */
+  /* Modular scale */
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.8125rem; /* 13px */
+  --text-base: 0.9375rem; /* 15px */
+  --text-lg: 1.0625rem; /* 17px */
+  --text-xl: clamp(1.2rem, 0.5vw + 1.1rem, 1.45rem);
+  --text-2xl: clamp(1.45rem, 1vw + 1.25rem, 1.85rem);
+  --text-3xl: clamp(1.85rem, 2vw + 1.4rem, 2.5rem);
+  --text-4xl: clamp(2.25rem, 3.5vw + 1.4rem, 3.5rem);
+  --text-display: clamp(2.5rem, 6vw + 1rem, 5.5rem);
 
-  --leading-tight: 1.06; /* display serif, set close */
-  --leading-snug: 1.25;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
   --leading-normal: 1.5;
-  --leading-relaxed: 1.7; /* serif body needs the extra air */
+  --leading-relaxed: 1.65;
 
-  /* Tracking is the load-bearing typographic device: capitals open up,
-     large serif display tightens slightly. */
-  --tracking-display: -0.02em;
-  --tracking-normal: 0em;
-  --tracking-wide: 0.06em;
-  --tracking-caps: 0.14em; /* nav, buttons, small capitals */
-  --tracking-widest: 0.22em; /* the wordmark itself */
+  --tracking-display: -0.025em;
+  --tracking-normal: -0.01em;
+  --tracking-wide: 0.02em;
+  --tracking-caps: 0.08em;
+  --tracking-widest: 0.15em;
 
-  /* --- Spacing -----------------------------------------------------------
-     4px base. Section rhythm is deliberately large; whitespace is the
-     product's frame. */
+  /* --- Spacing ----------------------------------------------------------- */
   --spacing: 0.25rem;
-  --space-gutter: 1.25rem; /* page edge, mobile */
-  --space-gutter-lg: 2.5rem; /* page edge, desktop */
-  --space-section: clamp(3.5rem, 6vw, 7.5rem); /* vertical band rhythm */
-  --space-section-tight: clamp(2rem, 3.5vw, 3.5rem);
+  --space-gutter: 1.25rem;
+  --space-gutter-lg: 2.5rem;
+  --space-section: clamp(3rem, 5vw, 6rem);
+  --space-section-tight: clamp(1.75rem, 3vw, 3rem);
 
-  /* --- Containers --------------------------------------------------------
-     Editorial copy stays under ~70 characters; product grids get the wide
-     measure; imagery goes full bleed. */
-  --container-prose: 38rem;
-  --container-narrow: 52rem;
-  --container-page: 90rem;
-  --container-wide: 110rem;
+  /* --- Containers -------------------------------------------------------- */
+  --container-prose: 42rem;
+  --container-narrow: 56rem;
+  --container-page: 92rem;
+  --container-wide: 112rem;
 
-  /* --- Borders & radii ---------------------------------------------------
-     One hairline weight everywhere, and a true zero radius. A rounded
-     corner reads as software; this reads as print. */
+  /* --- Borders & radii --------------------------------------------------- */
   --radius-none: 0px;
-  --radius-full: 9999px; /* pills for swatches/dots only */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
 
   /* --- Motion ------------------------------------------------------------ */
-  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --duration-fast: 120ms;
-  --duration-base: 240ms;
-  --duration-slow: 600ms;
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 500ms;
 
   /* --- Aspect ratios ----------------------------------------------------- */
-  --aspect-product: 3 / 4; /* packshot */
-  --aspect-look: 2 / 3; /* campaign portrait */
+  --aspect-product: 1 / 1; /* tech square / 4:3 format */
+  --aspect-look: 4 / 3;
   --aspect-editorial: 16 / 9;
 }
 
@@ -127,7 +116,7 @@
   h4 {
     color: var(--color-ink);
     font-family: var(--font-display);
-    font-weight: 400; /* the serif carries weight through size, not bold */
+    font-weight: 600;
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-display);
     text-wrap: balance;
@@ -151,8 +140,7 @@
     text-wrap: pretty;
   }
 
-  /* Links inherit ink and carry a hairline underline that thickens on
-     hover — the only hover affordance the system needs for text. */
+  /* Links inherit ink and carry subtle hover transitions */
   a {
     color: inherit;
     text-decoration: none;
@@ -168,9 +156,9 @@
     color: var(--color-ash);
   }
 
-  /* One focus treatment, visible on both paper and bone. */
+  /* One focus treatment */
   :focus-visible {
-    outline: 1px solid var(--color-ribbon);
+    outline: 2px solid var(--color-ribbon);
     outline-offset: 2px;
   }
 
@@ -194,44 +182,44 @@
 }
 
 /* ==========================================================================
-   Components — the small set of surfaces every page reuses
+   Components — the surfaces every page reuses
    ========================================================================== */
 
 @layer components {
   /* --- Typographic roles ------------------------------------------------- */
 
-  /* Hero display type. Use once per page, at most. */
+  /* Hero display type */
   .type-display {
     font-family: var(--font-display);
     font-size: var(--text-display);
-    line-height: 0.96;
+    font-weight: 700;
+    line-height: 1.05;
     letter-spacing: var(--tracking-display);
     color: var(--color-ink);
   }
 
-  /* The wordmark lockup: capitals, extreme tracking, optical centering. */
+  /* The wordmark lockup */
   .type-wordmark {
     font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-size: 1.25rem;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: var(--tracking-widest);
-    text-indent: var(--tracking-widest); /* offsets trailing letter-space */
+    letter-spacing: 0.06em;
     color: var(--color-ink);
   }
 
-  /* Small capitals: navigation, buttons, table headers, filter labels.
-     This is the workhorse of luxury retail UI. */
+  /* Small badges, category tags, eyebrows */
   .type-caps {
     font-family: var(--font-sans);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: var(--tracking-caps);
-    line-height: 1;
+    line-height: 1.2;
   }
 
   .type-lead {
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-size: var(--text-lg);
     line-height: var(--leading-relaxed);
     color: var(--color-graphite);
@@ -240,32 +228,34 @@
   .type-meta {
     font-size: var(--text-sm);
     color: var(--color-ash);
-    letter-spacing: var(--tracking-wide);
+    letter-spacing: var(--tracking-normal);
   }
 
-  /* --- Buttons -----------------------------------------------------------
-     Two variants only: filled ink (primary commerce action) and hairline
-     outline (secondary). Both are rectangles, full-width on mobile,
-     56px tall, capitals inside. */
+  /* --- Buttons ----------------------------------------------------------- */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: calc(var(--spacing) * 2);
-    min-height: 3.5rem;
-    padding-inline: calc(var(--spacing) * 8);
+    min-height: 3rem;
+    padding-inline: calc(var(--spacing) * 6);
     border: 1px solid transparent;
-    border-radius: var(--radius-none);
+    border-radius: var(--radius-sm);
     font-family: var(--font-sans);
-    font-size: var(--text-xs);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-caps);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
     cursor: pointer;
     transition:
       background-color var(--duration-base) var(--ease-out-soft),
       color var(--duration-base) var(--ease-out-soft),
-      border-color var(--duration-base) var(--ease-out-soft);
+      border-color var(--duration-base) var(--ease-out-soft),
+      box-shadow var(--duration-base) var(--ease-out-soft),
+      transform var(--duration-fast) var(--ease-out-soft);
+  }
+
+  .btn:active:not(:disabled) {
+    transform: scale(0.985);
   }
 
   .btn:disabled {
@@ -276,21 +266,40 @@
   .btn-primary {
     background-color: var(--color-ink);
     color: var(--color-paper);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   }
 
   .btn-primary:not(:disabled):hover {
-    background-color: var(--color-graphite);
+    background-color: #18181b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .btn-outline {
-    background-color: transparent;
-    border-color: var(--color-ink);
+    background-color: var(--color-paper);
+    border-color: var(--color-hairline);
     color: var(--color-ink);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   }
 
   .btn-outline:not(:disabled):hover {
-    background-color: var(--color-ink);
-    color: var(--color-paper);
+    background-color: #f4f4f5;
+    border-color: #d4d4d8;
+  }
+
+  /* Glossy tech card wrapper */
+  .card-gloss {
+    background-color: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.02);
+    transition: box-shadow var(--duration-base) var(--ease-out-soft),
+                border-color var(--duration-base) var(--ease-out-soft),
+                transform var(--duration-base) var(--ease-out-soft);
+  }
+
+  .card-gloss:hover {
+    border-color: #d4d4d8;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
   }
 
   /* Text-only action, e.g. "Remove" in the shopping bag. */

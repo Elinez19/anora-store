@@ -1,4 +1,4 @@
-import { BachsWebhookError, webhooks } from "@bachs/sdk";
+import { BachsWebhookError, type WebhookEvent, webhooks } from "@bachs/sdk";
 
 import { fulfillBachsCheckout } from "@/lib/orders";
 import { webhookSecret } from "@/lib/bachs";
@@ -6,10 +6,23 @@ import { webhookSecret } from "@/lib/bachs";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+interface WebhookData {
+  checkout_id?: string;
+  charge_id?: string | null;
+  charge?: { id?: string | null };
+  amount?: string;
+  currency?: string;
+  payment_status?: string;
+  status?: string;
+  customer?: { email?: string | null };
+  customer_details?: { email?: string | null };
+  metadata?: Record<string, unknown> | null;
+}
+
 export async function POST(request: Request) {
   const payload = await request.text();
 
-  let event: any;
+  let event: WebhookEvent;
   try {
     event = webhooks.constructEvent(
       payload,
@@ -28,7 +41,7 @@ export async function POST(request: Request) {
   try {
     switch (event.type) {
       case "collection.succeeded": {
-        const data = event.data;
+        const data = event.data as WebhookData;
         if (data.checkout_id) {
           await fulfillBachsCheckout({
             checkoutId: data.checkout_id,
@@ -43,14 +56,15 @@ export async function POST(request: Request) {
       }
 
       case "checkout.completed": {
-        const data = event.data;
+        const data = event.data as WebhookData;
         if (data.payment_status === "paid" || data.status === "completed") {
           await fulfillBachsCheckout({
-            checkoutId: data.checkout_id,
+            checkoutId: data.checkout_id ?? "",
             chargeId: data.charge?.id ?? null,
             amount: data.amount,
             currency: data.currency,
-            customerEmail: data.customer_details?.email ?? data.customer?.email ?? null,
+            customerEmail:
+              data.customer_details?.email ?? data.customer?.email ?? null,
             metadata: data.metadata,
           });
         }
@@ -58,7 +72,10 @@ export async function POST(request: Request) {
       }
 
       case "collection.failed":
-        console.info("Bachs collection payment failed:", event.data?.checkout_id);
+        console.info(
+          "Bachs collection payment failed:",
+          (event.data as Record<string, unknown>)?.checkout_id,
+        );
         break;
 
       default:

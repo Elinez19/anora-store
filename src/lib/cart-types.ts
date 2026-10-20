@@ -25,6 +25,8 @@ export type BagLine = {
   quantity: number;
   lineTotalCents: number;
   stock: StockState;
+  /** Optional compare-at price in cents for discounts */
+  compareAtCents?: number | null;
   /** null for made-to-order pieces, which have no meaningful ceiling. */
   availableQuantity: number | null;
 };

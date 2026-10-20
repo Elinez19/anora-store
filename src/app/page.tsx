@@ -3,32 +3,44 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ProductCard } from "@/components/product-card";
+import { CategoryFilterTabs } from "@/components/category-filter-tabs";
+import { FeaturedSpotlight } from "@/components/featured-spotlight";
 import {
   getCategoriesWithCounts,
-  getJustArrived,
   getNewArrivals,
+  getProductsByCategory,
 } from "@/lib/products";
 import { subscribeToNewsletter } from "@/lib/newsletter";
-import { atelier, hero, services } from "@/lib/sample-data";
+import { hero, services } from "@/lib/sample-data";
 
 /** Rebuild at most every five minutes so catalogue edits land without a deploy. */
 export const revalidate = 300;
 
 export default async function Home() {
-  const [collections, newArrivals, justArrived] = await Promise.all([
-    getCategoriesWithCounts(),
-    getNewArrivals(),
-    getJustArrived(),
-  ]);
+  const [categories, allProducts, laptops, desktops, smartGadgets, accessories] =
+    await Promise.all([
+      getCategoriesWithCounts(),
+      getNewArrivals(16),
+      getProductsByCategory("laptops", 8),
+      getProductsByCategory("desktops", 4),
+      getProductsByCategory("smart-gadgets", 4),
+      getProductsByCategory("accessories", 4),
+    ]);
+
+  // Find featured accessory or fallback to first product
+  const spotlightProduct =
+    accessories.find((p) => p.slug.includes("aeroguard")) ||
+    accessories[0] ||
+    allProducts[0];
 
   return (
     <>
       <SiteHeader />
 
-      <main className="flex-1">
-        {/* --- Hero: one image, one headline, held to the lower-left ------- */}
-        <section className="relative isolate">
-          <div className="relative h-[78svh] min-h-128 w-full lg:h-[86svh]">
+      <main className="flex-1 bg-white">
+        {/* --- Top Banner / Hero Showcase --------------------------------- */}
+        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-900 text-white">
+          <div className="absolute inset-0 z-0 opacity-40">
             <Image
               src={hero.image}
               alt={hero.alt}
@@ -37,151 +49,169 @@ export default async function Home() {
               sizes="100vw"
               className="object-cover"
             />
-            {/* Scrim only where type sits, so the photograph stays a photograph */}
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-linear-to-t from-black/55 via-black/10 to-transparent"
-            />
+            <div className="absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent" />
           </div>
 
-          <div className="container-page absolute inset-x-0 bottom-0 pb-12 lg:pb-20">
-            <div className="stack max-w-xl">
-              <p className="type-caps text-white/80">{hero.season}</p>
-              <h1 className="type-display text-paper">{hero.title}</h1>
-              <p className="type-lead text-paper/90 max-w-md">{hero.copy}</p>
-              <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+          <div className="container-page relative z-10 py-16 lg:py-24">
+            <div className="max-w-2xl space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-800/80 px-3 py-1 text-xs font-semibold text-neutral-300 backdrop-blur-sm">
+                <span className="size-2 rounded-full bg-rose-500 animate-ping"></span>
+                <span>{hero.season}</span>
+              </div>
+              <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl text-white">
+                {hero.title}
+              </h1>
+              <p className="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-xl">
+                {hero.copy}
+              </p>
+              <div className="pt-2 flex flex-wrap gap-3">
                 <a
-                  href="#new-arrivals"
-                  className="btn btn-primary btn-block bg-paper text-ink hover:bg-paper/85"
+                  href="#latest-products"
+                  className="btn btn-primary bg-white text-neutral-950 hover:bg-neutral-100 font-bold"
                 >
-                  Shop the collection
+                  Explore Gadgets
                 </a>
                 <a
-                  href="#atelier"
-                  className="btn btn-outline btn-block border-paper text-paper hover:bg-paper hover:text-ink"
+                  href="#desktop-deals"
+                  className="btn btn-outline border-neutral-600 text-white hover:bg-neutral-800"
                 >
-                  See the campaign
+                  View Desktop Deals
                 </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* --- Featured collections --------------------------------------- */}
-        <section className="container-page section">
-          <div className="rule flex flex-wrap items-baseline justify-between gap-4 pb-6">
-            <h2>Collections</h2>
-            <a href="#" className="type-caps link-nav py-2">
+        {/* --- Best Sellers (Matching Reference UI) ------------------------ */}
+        <section className="container-page py-10 lg:py-14">
+          <div className="flex items-center justify-between pb-6">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-950">
+                Best Sellers
+              </h2>
+            </div>
+            {/* Carousel navigation controls */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                aria-label="Previous"
+                className="flex size-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-xs hover:border-neutral-300 hover:text-black transition-colors"
+              >
+                &larr;
+              </button>
+              <button
+                type="button"
+                aria-label="Next"
+                className="flex size-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-xs hover:border-neutral-300 hover:text-black transition-colors"
+              >
+                &rarr;
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+            {laptops.slice(0, 4).map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/collections/laptops"
+              className="rounded-md border border-neutral-300 bg-white px-8 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-800 shadow-xs hover:bg-neutral-50 transition-colors"
+            >
               View all
-            </a>
-          </div>
-
-          <ul className="mt-10 grid gap-x-4 gap-y-12 md:grid-cols-3">
-            {collections.map((collection) => (
-              <li key={collection.slug}>
-                <Link
-                  href={`/collections/${collection.slug}`}
-                  className="group block"
-                >
-                  <div className="media-frame aspect-look">
-                    <Image
-                      src={collection.image}
-                      alt={collection.alt}
-                      fill
-                      sizes="(min-width: 48rem) 31vw, 92vw"
-                      className="transition-transform duration-700 ease-out-soft group-hover:scale-[1.03]"
-                    />
-                  </div>
-                  <div className="stack-sm mt-5 flex-row items-baseline justify-between">
-                    <h3 className="text-2xl">{collection.name}</h3>
-                    <p className="type-meta text-2xs" data-numeric>
-                      {collection.pieceCount} pieces
-                    </p>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* --- New arrivals grid ------------------------------------------ */}
-        <section id="new-arrivals" className="bg-bone">
-          <div className="container-page section">
-            <div className="rule flex flex-wrap items-baseline justify-between gap-4 pb-6">
-              <h2>New arrivals</h2>
-              <Link href="/new-arrivals" className="type-caps link-nav py-2">
-                Shop all
-              </Link>
-            </div>
-
-            <div className="grid-products mt-10">
-              {newArrivals.map((product, i) => (
-                <ProductCard key={product.slug} product={product} priority={i < 2} />
-              ))}
-            </div>
+            </Link>
           </div>
         </section>
 
-        {/* --- Atelier story: image and text, equal weight ---------------- */}
-        <section id="atelier" className="container-page section">
-          <div className="grid-split">
-            <div className="media-frame aspect-4/5">
-              <Image
-                src={atelier.image}
-                alt={atelier.alt}
-                fill
-                sizes="(min-width: 64rem) 46vw, 92vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="stack-lg">
-              <h2 className="max-w-md">{atelier.title}</h2>
-              <div className="stack">
-                {atelier.copy.map((paragraph) => (
-                  <p key={paragraph} className="type-lead max-w-prose">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-              <a href="#" className="btn btn-outline self-start">
-                Inside the workshop
-              </a>
-            </div>
+        {/* --- Latest Products with Filter Tabs (Matching Reference UI) ---- */}
+        <section id="latest-products" className="container-page py-10 lg:py-14 border-t border-neutral-100">
+          <div className="mb-6 flex flex-col gap-1">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-950">
+              Latest Products
+            </h2>
           </div>
+
+          <CategoryFilterTabs
+            products={allProducts}
+            categories={categories.map((c) => ({ slug: c.slug, name: c.name }))}
+          />
         </section>
 
-        {/* --- Just arrived rail ------------------------------------------ */}
-        <section className="section-tight rule-top">
-          <div className="container-page">
-            <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <h2 className="text-2xl">Just arrived</h2>
-              <Link href="/new-arrivals" className="type-caps link-nav py-2">
-                All new in
-              </Link>
+        {/* --- Desktop Deals (Matching Reference UI) ----------------------- */}
+        <section id="desktop-deals" className="container-page py-10 lg:py-14 border-t border-neutral-100">
+          <div className="flex items-center justify-between pb-6">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-950">
+                Desktop Deals
+              </h2>
             </div>
+            <Link
+              href="/collections/desktops"
+              className="text-xs font-semibold text-neutral-500 hover:text-neutral-950 transition-colors"
+            >
+              Shop all desktops &rarr;
+            </Link>
           </div>
-          {/* Rail breaks the container so cards run to the edge on mobile */}
-          <div className="rail mt-8 pb-2">
-            {justArrived.map((product) => (
-              <ProductCard
-                key={product.slug}
-                product={product}
-                sizes="(min-width: 80rem) 23vw, (min-width: 48rem) 32vw, 72vw"
-              />
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+            {desktops.slice(0, 4).map((product) => (
+              <ProductCard key={product.slug} product={product} />
             ))}
           </div>
         </section>
 
-        {/* --- Services --------------------------------------------------- */}
-        <section className="bg-bone">
-          <div className="container-page section-tight">
-            <ul className="grid gap-10 md:grid-cols-3">
+        {/* --- Smart Gadgets You'll Love (Matching Reference UI) ----------- */}
+        <section className="container-page py-10 lg:py-14 border-t border-neutral-100">
+          <div className="flex items-center justify-between pb-6">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-950">
+                Smart Gadgets <span className="underline decoration-neutral-950 underline-offset-4">You&apos;ll Love</span>
+              </h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                aria-label="Previous"
+                className="flex size-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-xs hover:border-neutral-300 hover:text-black transition-colors"
+              >
+                &larr;
+              </button>
+              <button
+                type="button"
+                aria-label="Next"
+                className="flex size-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-xs hover:border-neutral-300 hover:text-black transition-colors"
+              >
+                &rarr;
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+            {smartGadgets.slice(0, 4).map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
+          </div>
+        </section>
+
+        {/* --- Featured Product Spotlight (AeroGuard Pro Backpack) --------- */}
+        {spotlightProduct ? (
+          <FeaturedSpotlight product={spotlightProduct} />
+        ) : null}
+
+        {/* --- Services & Guarantees Strip --------------------------------- */}
+        <section className="border-t border-neutral-200 bg-neutral-50">
+          <div className="container-page py-10">
+            <ul className="grid gap-6 sm:grid-cols-3">
               {services.map((service) => (
-                <li key={service.title} className="stack-sm">
-                  <h3 className="font-sans text-ink text-sm font-medium tracking-normal">
+                <li key={service.title} className="card-gloss p-5">
+                  <h3 className="text-sm font-bold text-neutral-950">
                     {service.title}
                   </h3>
-                  <p className="text-ash text-sm">{service.copy}</p>
+                  <p className="mt-1 text-xs text-neutral-600 leading-relaxed">
+                    {service.copy}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -189,46 +219,37 @@ export default async function Home() {
         </section>
 
         {/* --- Newsletter -------------------------------------------------- */}
-        <section className="container-page section">
-          <div className="grid-split">
-            <div className="stack">
-              <h2 className="max-w-sm text-3xl">
-                Collections reach our clients first
+        <section className="container-page py-12 lg:py-16">
+          <div className="card-gloss p-8 lg:p-12">
+            <div className="max-w-xl">
+              <span className="text-xs font-bold uppercase tracking-wider text-rose-600">
+                Stay Updated
+              </span>
+              <h2 className="mt-2 text-2xl font-bold text-neutral-950">
+                Get early access to gadget drops & flash discounts
               </h2>
-              <p className="type-meta max-w-sm">
-                One letter each month: new pieces, private appointments, nothing
-                else.
+              <p className="mt-2 text-xs text-neutral-600">
+                Receive weekly inventory alerts on certified grade-A laptops, desk upgrades, and tech launches.
               </p>
-            </div>
 
-            {/* Server Action, so the address posts in the request body rather
-                than landing in the URL. Nothing persists it yet. */}
-            <form className="stack-lg" action={subscribeToNewsletter}>
-              <div>
-                <label htmlFor="email" className="field-label">
-                  Email address
-                </label>
+              <form className="mt-6 flex flex-col sm:flex-row gap-3" action={subscribeToNewsletter}>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
-                  placeholder="you@example.com"
-                  className="field"
+                  placeholder="Enter your email address"
+                  className="flex-1 rounded-md border border-neutral-300 bg-white px-3.5 py-2.5 text-xs text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none"
                 />
-              </div>
-              <button type="submit" className="btn btn-primary btn-block sm:min-w-56">
-                Sign up
-              </button>
-              <p className="type-meta text-2xs max-w-sm">
-                By signing up you agree to our{" "}
-                <a href="#" className="link">
-                  privacy policy
-                </a>
-                . Unsubscribe in one click.
-              </p>
-            </form>
+                <button
+                  type="submit"
+                  className="rounded-md bg-neutral-950 px-6 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-neutral-800 transition-colors"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
           </div>
         </section>
       </main>

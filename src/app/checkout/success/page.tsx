@@ -15,7 +15,7 @@ import { formatCents } from "@/lib/format";
 import { BachsApiError } from "@bachs/sdk";
 import { bachs } from "@/lib/bachs";
 import { getOrderBySessionId } from "@/lib/orders";
-import { requireUser } from "@/lib/session";
+import { getCurrentUser } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
 
@@ -56,11 +56,19 @@ export default async function CheckoutSuccessPage({
     notFound();
   }
 
-  const user = await requireUser("/bag");
+  const user = await getCurrentUser();
 
-  let session: any = null;
+  interface BachsSessionData {
+    status?: string;
+    amount?: string;
+    metadata?: Record<string, string>;
+    customer_details?: { email?: string };
+    customer?: { email?: string };
+  }
+
+  let session: BachsSessionData | null = null;
   try {
-    session = await bachs.checkoutSessions.get(sessionId);
+    session = (await bachs.checkoutSessions.get(sessionId)) as unknown as BachsSessionData;
   } catch (err) {
     if (err instanceof BachsApiError && err.status === 404) {
       notFound();
@@ -70,8 +78,10 @@ export default async function CheckoutSuccessPage({
 
   if (session) {
     const sessionUserId = (session.metadata as Record<string, string> | undefined)?.user_id;
-    // Authorization check: prevent reading another customer's order
-    if (sessionUserId && sessionUserId !== user.id) notFound();
+    // Authorization check: if session belongs to a registered user, make sure it matches
+    if (sessionUserId && sessionUserId !== "guest" && !sessionUserId.startsWith("guest_") && user && sessionUserId !== user.id) {
+      notFound();
+    }
 
     // If still open / abandoned, redirect back to bag
     if (session.status === "open") redirect("/bag");
@@ -81,7 +91,9 @@ export default async function CheckoutSuccessPage({
   const email =
     session?.customer_details?.email ??
     session?.customer?.email ??
-    user.email;
+    order?.email ??
+    user?.email ??
+    "your email";
 
   const lines = order
     ? order.items.map((item) => ({

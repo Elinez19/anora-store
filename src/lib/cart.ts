@@ -66,12 +66,59 @@ export async function getBag(userId: string): Promise<Bag> {
       quantity: item.quantity,
       lineTotalCents: product.priceCents * item.quantity,
       stock: stockState(product),
+      compareAtCents: product.compareAtCents ?? null,
       availableQuantity: product.madeToOrder ? null : product.stockQuantity,
     };
   });
 
   return {
     cartId: cart.id,
+    lines,
+    subtotalCents: lines.reduce((total, line) => total + line.lineTotalCents, 0),
+    itemCount: lines.reduce((total, line) => total + line.quantity, 0),
+  };
+}
+
+/** Resolves an unauthenticated guest user's bag from their cookie. */
+export async function getGuestBag(items: { productId: string; quantity: number }[]): Promise<Bag> {
+  if (items.length === 0) return emptyBag;
+
+  const productRows = await db.query.products.findMany({
+    where: (products, { inArray }) =>
+      inArray(
+        products.id,
+        items.map((i) => i.productId),
+      ),
+    with: {
+      images: { orderBy: [asc(productImages.position)] },
+    },
+  });
+
+  const productMap = new Map(productRows.map((p) => [p.id, p]));
+
+  const lines: BagLine[] = [];
+  for (const item of items) {
+    const product = productMap.get(item.productId);
+    if (!product) continue;
+    const packshot = product.images[0];
+    lines.push({
+      productId: product.id,
+      slug: product.slug,
+      name: product.name,
+      colour: product.colour,
+      sku: product.sku,
+      image: packshot ? { src: packshot.url, alt: packshot.alt } : null,
+      unitPriceCents: product.priceCents,
+      quantity: item.quantity,
+      lineTotalCents: product.priceCents * item.quantity,
+      stock: stockState(product),
+      compareAtCents: product.compareAtCents ?? null,
+      availableQuantity: product.madeToOrder ? null : product.stockQuantity,
+    });
+  }
+
+  return {
+    cartId: null,
     lines,
     subtotalCents: lines.reduce((total, line) => total + line.lineTotalCents, 0),
     itemCount: lines.reduce((total, line) => total + line.quantity, 0),
@@ -87,6 +134,17 @@ export async function getBagCount(userId: string): Promise<number> {
     .where(eq(carts.userId, userId));
 
   return Number(row?.total ?? 0);
+}
+
+/** Merges guest cart items into a newly authenticated user's DB cart. */
+export async function mergeGuestCartToUser(
+  userId: string,
+  items: { productId: string; quantity: number }[],
+): Promise<void> {
+  if (items.length === 0) return;
+  for (const item of items) {
+    await addItem(userId, item.productId, item.quantity);
+  }
 }
 
 /** Adds, or bumps an existing line, capped at `MAX_QUANTITY`. */

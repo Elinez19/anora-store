@@ -4,6 +4,7 @@ import { useActionState } from "react";
 
 import { addToBag } from "@/lib/cart-actions";
 import { emptyCartState } from "@/lib/cart-form-state";
+import { emitCartUpdate } from "@/components/cart-nav-button";
 
 /**
  * Replaces the inert "Add to bag" button. This renders on a statically
@@ -17,7 +18,16 @@ export function AddToBagForm({
   slug: string;
   soldOut: boolean;
 }) {
-  const [state, action, pending] = useActionState(addToBag, emptyCartState);
+  const [state, action, pending] = useActionState(
+    async (prevState: any, formData: FormData) => {
+      const res = await addToBag(prevState, formData);
+      if (!res?.error) {
+        emitCartUpdate();
+      }
+      return res;
+    },
+    emptyCartState,
+  );
 
   return (
     <form action={action} className="stack">

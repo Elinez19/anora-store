@@ -67,7 +67,7 @@ export default async function CollectionPage({
             type where it does not ------------------------------------- */}
         {category.image ? (
           <header className="relative isolate">
-            <div className="relative h-[42svh] min-h-[20rem] w-full lg:h-[52svh]">
+            <div className="relative h-[42svh] min-h-80 w-full lg:h-[52svh]">
               <Image
                 src={category.image}
                 alt={category.alt}
@@ -78,7 +78,7 @@ export default async function CollectionPage({
               />
               <div
                 aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"
+                className="absolute inset-0 bg-linear-to-t from-black/55 via-black/10 to-transparent"
               />
             </div>
             <div className="container-page absolute inset-x-0 bottom-0 pb-10 lg:pb-14">

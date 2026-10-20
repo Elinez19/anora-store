@@ -1,89 +1,83 @@
 /**
- * Static storefront chrome: the hero, the atelier story, the services strip and
- * the navigation labels. The catalogue itself now lives in Postgres — see
- * `src/lib/products.ts` for products, categories and stock.
- *
- * Imagery: Unsplash, referenced by URL. All frames were chosen to be free of
- * third-party branding.
+ * Static storefront chrome: hero, brand guarantees, tech services strip and
+ * gadget navigation labels.
  */
 
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=80`;
 
 export const hero = {
-  season: "Autumn winter 2026",
-  title: "The Long Coat",
-  copy: "Twelve pieces cut from Italian wool, made to be worn for a decade rather than a season.",
-  image: unsplash("1613915617430-8ab0fd7c6baf"),
-  alt: "Model wearing a tailored grey wool coat over black separates",
+  season: "Next-Gen Tech 2026",
+  title: "Precision Gadgets & Ultra Workstations",
+  copy: "Engineered for speed, durability, and modern workflows. From Intel Core laptops and 4K displays to AI smart glasses and aero backpacks.",
+  image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1600&q=80",
+  alt: "High performance modern laptop and desk accessories on clean white desk",
 };
 
 export const atelier = {
-  title: "Made in Scandicci, finished by hand",
+  title: "AeroGuard Pro 16: Engineered for High Mobility",
   copy: [
-    "Every bag leaves one bench. A single artisan cuts the hide, saddle-stitches the gussets and burnishes the edges, then signs the lining with their own number.",
-    "It takes eleven hours and around forty years of accumulated practice. We would rather make fewer.",
+    "Built with ballistic waterproof Oxford weave, dedicated impact-dampening sleeves for 16-inch laptops, and integrated external fast-charging USB ports.",
+    "Certified for rugged daily commute and international travel. Ergonomic breathable back support with 128 days warranty protection.",
   ],
-  image: unsplash("1531188929123-0cfa61e6c770"),
-  alt: "Artisan hand-tooling the edge of a leather panel at a workbench",
+  image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=80",
+  alt: "AeroGuard Pro Tech Laptop Backpack with multiple compartments and USB charging port",
 };
 
 export const services = [
   {
-    title: "Complimentary delivery",
-    copy: "Shipped in two working days, returned free within thirty.",
+    title: "1-2 Day Express Delivery",
+    copy: "Nationwide dispatch within 24 hours. Tracked directly to your doorstep.",
   },
   {
-    title: "Gift wrapping",
-    copy: "Boxed in cotton-lined card, ribboned, with a handwritten card.",
+    title: "128 Days Full Warranty",
+    copy: "Every laptop, monitor and smart gadget comes backed by verified warranty coverage.",
   },
   {
-    title: "Repairs for life",
-    copy: "Send any leather piece back to the bench that made it.",
+    title: "Complimentary Returns",
+    copy: "7-day hassle-free returns on all accessories and gadgets.",
   },
 ];
 
 /**
- * Chrome navigation. Only the routes that exist carry a real href; the rest
- * stay on "#" until their pages land.
+ * Chrome navigation for computer gadgets.
  */
 export const footerNav = [
   {
-    heading: "Client services",
+    heading: "Support & Services",
     links: [
-      { label: "Contact us", href: "#" },
-      { label: "Shipping", href: "#" },
-      { label: "Returns", href: "#" },
-      { label: "Order tracking", href: "#" },
-      { label: "Repairs", href: "#" },
+      { label: "Track Your Order", href: "#" },
+      { label: "Warranty & Repairs", href: "#" },
+      { label: "Shipping Policies", href: "#" },
+      { label: "Returns & Exchanges", href: "#" },
+      { label: "Corporate Orders", href: "#" },
     ],
   },
   {
-    heading: "The house",
+    heading: "Company",
     links: [
-      { label: "Our story", href: "#" },
-      { label: "Sustainability", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Store locator", href: "#" },
-      { label: "Press", href: "#" },
+      { label: "About Anoralite", href: "#" },
+      { label: "Certified Grade-A Guarantee", href: "#" },
+      { label: "Store Locations", href: "#" },
+      { label: "Customer Reviews", href: "#" },
+      { label: "Contact Us", href: "#" },
     ],
   },
   {
-    heading: "Shop",
+    heading: "Categories",
     links: [
-      { label: "New in", href: "/new-arrivals" },
-      { label: "Women", href: "#" },
-      { label: "Men", href: "#" },
-      { label: "Leather goods", href: "#" },
-      { label: "Gifts", href: "#" },
+      { label: "Laptops & Notebooks", href: "/collections/laptops" },
+      { label: "Desktop Deals", href: "/collections/desktops" },
+      { label: "Smart Gadgets", href: "/collections/smart-gadgets" },
+      { label: "Accessories & Bags", href: "/collections/accessories" },
+      { label: "New Arrivals", href: "/new-arrivals" },
     ],
   },
 ];
 
 export const primaryNav = [
-  { label: "New in", href: "/new-arrivals" },
-  { label: "Women", href: "#" },
-  { label: "Men", href: "#" },
-  { label: "Leather goods", href: "#" },
-  { label: "Gifts", href: "#" },
-  { label: "Stories", href: "#" },
+  { label: "Laptops", href: "/collections/laptops" },
+  { label: "Desktops", href: "/collections/desktops" },
+  { label: "Smart Gadgets", href: "/collections/smart-gadgets" },
+  { label: "Accessories", href: "/collections/accessories" },
+  { label: "New Arrivals", href: "/new-arrivals" },
 ];

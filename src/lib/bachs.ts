@@ -73,13 +73,12 @@ export function appUrl(): string {
   }
 
   const url = process.env.NEXT_PUBLIC_APP_URL?.trim();
-  if (url && !url.includes("localhost") && !url.includes("127.0.0.1")) {
+  if (url) {
     return url.replace(/\/$/, "");
   }
 
-  // Fallback if defined
-  if (url) {
-    return url.replace(/\/$/, "");
+  if (process.env.NODE_ENV !== "production") {
+    return "http://localhost:3000";
   }
 
   throw new Error("NEXT_PUBLIC_APP_URL is not set.");

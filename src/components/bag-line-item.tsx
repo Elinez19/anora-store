@@ -9,6 +9,7 @@ import { removeFromBag, updateBagQuantity } from "@/lib/cart-actions";
 import { emptyCartState } from "@/lib/cart-form-state";
 import { formatCents } from "@/lib/format";
 import { stockCopy, stockTone } from "@/lib/stock";
+import { emitCartUpdate } from "@/components/cart-nav-button";
 
 /**
  * One line of the bag. The quantity control is a `<select>` that submits on
@@ -17,11 +18,19 @@ import { stockCopy, stockTone } from "@/lib/stock";
  */
 export function BagLineItem({ line }: { line: BagLine }) {
   const [quantityState, quantityAction, quantityPending] = useActionState(
-    updateBagQuantity,
+    async (prevState: any, formData: FormData) => {
+      const res = await updateBagQuantity(prevState, formData);
+      if (!res?.error) emitCartUpdate();
+      return res;
+    },
     emptyCartState,
   );
   const [removeState, removeAction, removePending] = useActionState(
-    removeFromBag,
+    async (prevState: any, formData: FormData) => {
+      const res = await removeFromBag(prevState, formData);
+      if (!res?.error) emitCartUpdate();
+      return res;
+    },
     emptyCartState,
   );
 
