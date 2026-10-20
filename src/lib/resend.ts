@@ -46,7 +46,18 @@ export function getFromEmail(): string {
 }
 
 /**
- * Get the designated support/admin inbox address.
+ * Inbound receiving address provided by Resend (<id>.resend.app).
+ * When customers hit 'Reply' in their email apps, it delivers straight here!
+ */
+export function getInboundEmail(): string {
+  return (
+    process.env.RESEND_RECEIVING_EMAIL?.trim() ||
+    "support@eldeoa.resend.app"
+  );
+}
+
+/**
+ * Get the designated support/admin inbox address (for alert forwarding).
  */
 export function getSupportEmail(): string {
   const customSupport = process.env.CONTACT_SUPPORT_EMAIL?.trim();
@@ -55,7 +66,7 @@ export function getSupportEmail(): string {
   const adminList = process.env.ADMIN_EMAILS?.split(",")[0]?.trim();
   if (adminList) return adminList;
 
-  return "support@anoraastore.com";
+  return "elijahndenwa19@gmail.com";
 }
 
 /**
@@ -135,6 +146,7 @@ export async function sendOrderReceiptEmail(params: {
     subject,
     html,
     text,
+    replyTo: getInboundEmail(),
     tags: [
       { name: "category", value: "order_confirmation" },
       { name: "order_id", value: params.orderId },
@@ -200,7 +212,7 @@ export async function sendSupportCustomerReceipt(params: {
     subject,
     html,
     text,
-    replyTo: getSupportEmail(),
+    replyTo: getInboundEmail(),
     tags: [
       { name: "category", value: "support_receipt" },
       { name: "ticket_number", value: params.ticketNumber },
@@ -259,7 +271,7 @@ export async function sendSupportReplyEmail(params: {
     subject,
     html,
     text,
-    replyTo: getSupportEmail(),
+    replyTo: getInboundEmail(),
     tags: [
       { name: "category", value: "support_reply" },
       { name: "ticket_number", value: params.ticketNumber },

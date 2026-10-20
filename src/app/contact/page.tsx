@@ -128,10 +128,10 @@ export default function ContactPage() {
                       Support Email:
                     </span>
                     <a
-                      href="mailto:support@anoraastore.com"
+                      href="mailto:support@eldeoa.resend.app"
                       className="text-neutral-950 font-mono underline hover:text-neutral-700"
                     >
-                      support@anoraastore.com
+                      support@eldeoa.resend.app
                     </a>
                   </li>
                   <li className="flex items-start gap-3">
