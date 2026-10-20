@@ -1,6 +1,6 @@
 import { getAdminCustomers } from "@/lib/admin-data";
 import { formatCents } from "@/lib/format";
-import { updateUserRoleAction } from "@/lib/admin-actions";
+import { CustomerRoleSelect } from "@/components/admin/customer-role-select";
 
 export const dynamic = "force-dynamic";
 
@@ -21,20 +21,20 @@ export default async function AdminCustomersPage({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs uppercase font-mono tracking-widest text-cyan-400">
+          <span className="text-xs uppercase font-mono tracking-widest text-zinc-500 font-semibold">
             Accounts
           </span>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white mt-1">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 mt-1">
             Customer Directory
           </h1>
-          <p className="text-sm text-zinc-400 mt-1">
+          <p className="text-sm text-zinc-500 mt-1">
             Manage registered accounts, lifetime purchasing value, and administrator permissions.
           </p>
         </div>
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white rounded-2xl p-4 sm:p-5 border border-zinc-200 shadow-sm flex items-center justify-between">
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-zinc-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] flex items-center justify-between">
         <form className="w-full flex items-center gap-3">
           <div className="relative flex-1">
             <input
@@ -60,7 +60,7 @@ export default async function AdminCustomersPage({
           </div>
           <button
             type="submit"
-            className="px-4 py-2 rounded-xl bg-zinc-950 text-white text-xs font-semibold hover:bg-zinc-800 transition"
+            className="px-4 py-2 rounded-xl bg-zinc-950 text-white text-xs font-semibold hover:bg-zinc-800 transition shadow-sm active:scale-[0.98]"
           >
             Search
           </button>
@@ -68,11 +68,11 @@ export default async function AdminCustomersPage({
       </div>
 
       {/* Customers Table */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden text-zinc-950">
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl border border-zinc-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] overflow-hidden text-zinc-950">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-zinc-200 bg-zinc-50/50 font-mono text-[11px] uppercase text-zinc-500">
+              <tr className="border-b border-zinc-200 bg-zinc-50/60 font-mono text-[11px] uppercase text-zinc-500">
                 <th className="py-3.5 px-4">Customer</th>
                 <th className="py-3.5 px-4">Member Since</th>
                 <th className="py-3.5 px-4">Orders Placed</th>
@@ -133,29 +133,10 @@ export default async function AdminCustomersPage({
                       </td>
 
                       <td className="py-4 px-4">
-                        <form
-                          action={async (formData: FormData) => {
-                            "use server";
-                            const newRole = formData.get("role") as
-                              | "admin"
-                              | "customer";
-                            await updateUserRoleAction(cust.id, newRole);
-                          }}
-                        >
-                          <select
-                            name="role"
-                            defaultValue={cust.role}
-                            onChange={(e) => e.target.form?.requestSubmit()}
-                            className={`px-3 py-1 rounded-full text-xs font-mono font-semibold border ${
-                              cust.role === "admin"
-                                ? "bg-cyan-50 border-cyan-200 text-cyan-800"
-                                : "bg-zinc-100 border-zinc-200 text-zinc-800"
-                            } focus:outline-none`}
-                          >
-                            <option value="customer">Customer</option>
-                            <option value="admin">Admin</option>
-                          </select>
-                        </form>
+                        <CustomerRoleSelect
+                          userId={cust.id}
+                          initialRole={cust.role}
+                        />
                       </td>
                     </tr>
                   );

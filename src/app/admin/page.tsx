@@ -18,13 +18,13 @@ export default async function AdminOverviewPage() {
       {/* Top Banner / Welcome */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
-          <span className="text-xs uppercase font-mono tracking-widest text-cyan-400">
+          <span className="text-xs uppercase font-mono tracking-widest text-zinc-500 font-semibold">
             System Overview
           </span>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white mt-1">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 mt-1">
             Store Command Center
           </h1>
-          <p className="text-sm text-zinc-400 mt-1">
+          <p className="text-sm text-zinc-500 mt-1">
             Real-time telemetry, catalogue status, and revenue performance.
           </p>
         </div>
@@ -32,13 +32,13 @@ export default async function AdminOverviewPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/products/new"
-            className="px-4 py-2 rounded-xl bg-white text-zinc-950 font-semibold text-xs hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+            className="px-5 py-2.5 rounded-xl bg-zinc-950 text-white font-semibold text-xs hover:bg-zinc-800 transition-all shadow-[0_4px_14px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.18)] active:scale-[0.98] border border-black/10"
           >
             + New Product
           </Link>
           <Link
             href="/admin/orders"
-            className="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 font-semibold text-xs hover:bg-zinc-800 transition"
+            className="px-5 py-2.5 rounded-xl bg-white border border-zinc-200/90 text-zinc-800 font-semibold text-xs hover:bg-zinc-950 hover:text-white hover:border-zinc-950 transition-all shadow-sm active:scale-[0.98]"
           >
             Fulfill Orders
           </Link>
@@ -107,7 +107,7 @@ export default async function AdminOverviewPage() {
       {/* Main Grid: Recent Orders & Inventory Replenishment Alert */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Recent Orders Feed (2 cols) */}
-        <div className="lg:col-span-2 bg-white text-zinc-950 rounded-2xl border border-zinc-200 p-6 sm:p-8 shadow-sm">
+        <div className="lg:col-span-2 bg-white/95 backdrop-blur-xl text-zinc-950 rounded-2xl border border-zinc-200/80 p-6 sm:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)]">
           <div className="flex items-center justify-between pb-6 border-b border-zinc-100">
             <div>
               <h2 className="text-lg font-bold tracking-tight text-zinc-950">
@@ -119,7 +119,7 @@ export default async function AdminOverviewPage() {
             </div>
             <Link
               href="/admin/orders"
-              className="text-xs font-semibold text-zinc-900 hover:text-cyan-600 transition"
+              className="text-xs font-semibold text-zinc-900 hover:text-zinc-600 transition"
             >
               View all orders →
             </Link>
@@ -128,7 +128,7 @@ export default async function AdminOverviewPage() {
           <div className="overflow-x-auto mt-4">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-zinc-100 font-mono text-[11px] uppercase text-zinc-400">
+                <tr className="border-b border-zinc-100 font-mono text-[11px] uppercase text-zinc-400 bg-zinc-50/50">
                   <th className="py-3 px-3">Order ID</th>
                   <th className="py-3 px-3">Customer</th>
                   <th className="py-3 px-3">Amount</th>
@@ -146,26 +146,26 @@ export default async function AdminOverviewPage() {
                 ) : (
                   stats.recentOrders.map((ord) => (
                     <tr key={ord.id} className="hover:bg-zinc-50/80 transition-colors">
-                      <td className="py-3.5 px-3 font-mono text-zinc-900">
+                      <td className="py-3.5 px-3 font-mono text-zinc-900 font-semibold">
                         #{ord.id.slice(0, 8)}
                       </td>
                       <td className="py-3.5 px-3">
-                        <div className="font-semibold text-zinc-900">{ord.email}</div>
+                        <div className="font-semibold text-zinc-950">{ord.email}</div>
                         <div className="text-[10px] text-zinc-400">
                           {ord.itemCount} {ord.itemCount === 1 ? "item" : "items"}
                         </div>
                       </td>
-                      <td className="py-3.5 px-3 font-mono font-bold text-zinc-900">
+                      <td className="py-3.5 px-3 font-mono font-bold text-zinc-950">
                         {formatCents(ord.totalCents)}
                       </td>
                       <td className="py-3.5 px-3">
                         <span
-                          className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-mono capitalize ${
+                          className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono capitalize ${
                             ord.fulfillmentStatus === "delivered"
-                              ? "bg-emerald-100 text-emerald-800"
+                              ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                               : ord.fulfillmentStatus === "shipped"
-                              ? "bg-cyan-100 text-cyan-800"
-                              : "bg-zinc-100 text-zinc-800"
+                              ? "bg-sky-50 text-sky-800 border border-sky-200"
+                              : "bg-zinc-100 text-zinc-800 border border-zinc-200"
                           }`}
                         >
                           {ord.fulfillmentStatus}
@@ -174,7 +174,7 @@ export default async function AdminOverviewPage() {
                       <td className="py-3.5 px-3 text-right">
                         <Link
                           href={`/admin/orders/${ord.id}`}
-                          className="px-2.5 py-1 rounded bg-zinc-100 text-zinc-800 text-[11px] hover:bg-zinc-950 hover:text-white transition"
+                          className="px-3 py-1 rounded-lg bg-zinc-100 text-zinc-800 text-[11px] font-semibold hover:bg-zinc-950 hover:text-white transition-all shadow-xs"
                         >
                           Details
                         </Link>
@@ -188,7 +188,7 @@ export default async function AdminOverviewPage() {
         </div>
 
         {/* Right Column: Low Stock / Action Items */}
-        <div className="bg-white text-zinc-950 rounded-2xl border border-zinc-200 p-6 sm:p-8 shadow-sm flex flex-col">
+        <div className="bg-white/95 backdrop-blur-xl text-zinc-950 rounded-2xl border border-zinc-200/80 p-6 sm:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col">
           <div className="flex items-center justify-between pb-6 border-b border-zinc-100">
             <div>
               <h2 className="text-lg font-bold tracking-tight text-zinc-950">
@@ -200,7 +200,7 @@ export default async function AdminOverviewPage() {
             </div>
             <Link
               href="/admin/products"
-              className="text-xs font-semibold text-zinc-900 hover:text-cyan-600 transition"
+              className="text-xs font-semibold text-zinc-900 hover:text-zinc-600 transition"
             >
               All →
             </Link>
@@ -223,7 +223,7 @@ export default async function AdminOverviewPage() {
                       />
                     )}
                     <div className="min-w-0">
-                      <div className="font-semibold text-xs text-zinc-900 truncate">
+                      <div className="font-semibold text-xs text-zinc-950 truncate">
                         {item.name}
                       </div>
                       <div className="text-[10px] font-mono text-zinc-500">
@@ -233,10 +233,10 @@ export default async function AdminOverviewPage() {
                   </div>
 
                   <span
-                    className={`font-mono text-xs px-2 py-0.5 rounded-full font-bold flex-shrink-0 ${
+                    className={`font-mono text-xs px-2.5 py-0.5 rounded-full font-bold flex-shrink-0 ${
                       item.stockQuantity === 0
-                        ? "bg-rose-100 text-rose-700"
-                        : "bg-amber-100 text-amber-800"
+                        ? "bg-rose-50 text-rose-700 border border-rose-200"
+                        : "bg-amber-50 text-amber-800 border border-amber-200"
                     }`}
                   >
                     {item.stockQuantity} left
@@ -249,7 +249,7 @@ export default async function AdminOverviewPage() {
           <div className="pt-6 border-t border-zinc-100 mt-auto">
             <Link
               href="/admin/products"
-              className="w-full block text-center py-2.5 rounded-xl bg-zinc-950 text-white font-semibold text-xs hover:bg-zinc-800 transition"
+              className="w-full block text-center py-2.5 rounded-xl bg-zinc-950 text-white font-semibold text-xs hover:bg-zinc-800 transition-all shadow-[0_4px_14px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.18)] active:scale-[0.98]"
             >
               Manage Inventory
             </Link>

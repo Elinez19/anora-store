@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAdminOrderById } from "@/lib/admin-data";
 import { formatCents } from "@/lib/format";
-import { updateOrderStatusAction } from "@/lib/admin-actions";
+import { OrderStatusSelect } from "@/components/admin/order-status-select";
 
 export const dynamic = "force-dynamic";
 
@@ -30,49 +30,35 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
     <div className="space-y-8 max-w-5xl">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 mb-2">
-          <Link href="/admin/orders" className="hover:text-white transition">
+        <div className="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-2 font-medium">
+          <Link href="/admin/orders" className="hover:text-zinc-950 transition">
             Orders
           </Link>
           <span>/</span>
-          <span className="text-cyan-400">Order #{order.id.slice(0, 8)}</span>
+          <span className="text-zinc-950 font-semibold">Order #{order.id.slice(0, 8)}</span>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950">
               Order #{order.id.slice(0, 8)}
             </h1>
-            <p className="text-sm text-zinc-400 mt-1">Placed on {dateStr}</p>
+            <p className="text-sm text-zinc-500 mt-1">Placed on {dateStr}</p>
           </div>
 
-          <form
-            action={async (formData: FormData) => {
-              "use server";
-              const status = formData.get("status") as string;
-              await updateOrderStatusAction(order.id, status);
-            }}
-            className="flex items-center gap-3"
-          >
-            <span className="text-xs font-mono text-zinc-400">Fulfillment:</span>
-            <select
-              name="status"
-              defaultValue={order.fulfillmentStatus}
-              onChange={(e) => e.target.form?.requestSubmit()}
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-mono text-zinc-500 font-medium">Fulfillment:</span>
+            <OrderStatusSelect
+              orderId={order.id}
+              initialStatus={order.fulfillmentStatus}
               className="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-white text-zinc-950 border border-zinc-200 focus:outline-none shadow-sm"
-            >
-              <option value="paid">Paid</option>
-              <option value="processing">Processing</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-          </form>
+            />
+          </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left 2 Cols: Purchased Items */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 p-6 sm:p-8 shadow-sm text-zinc-950 space-y-6">
+        <div className="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-2xl border border-zinc-200/80 p-6 sm:p-8 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] text-zinc-950 space-y-6">
           <h2 className="text-lg font-bold tracking-tight text-zinc-950 font-sans">
             Purchased Hardware ({order.items.length})
           </h2>
@@ -131,7 +117,7 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
         {/* Right 1 Col: Customer & Payment Details */}
         <div className="space-y-6">
           {/* Customer Card */}
-          <div className="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm text-zinc-950">
+          <div className="bg-white/95 backdrop-blur-xl rounded-2xl border border-zinc-200/80 p-6 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] text-zinc-950">
             <h2 className="text-base font-bold text-zinc-950 font-sans mb-4">
               Customer Account
             </h2>
@@ -165,7 +151,7 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
           </div>
 
           {/* Payment Processor Details */}
-          <div className="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm text-zinc-950">
+          <div className="bg-white/95 backdrop-blur-xl rounded-2xl border border-zinc-200/80 p-6 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] text-zinc-950">
             <h2 className="text-base font-bold text-zinc-950 font-sans mb-4">
               Payment Telemetry
             </h2>

@@ -11,17 +11,17 @@ export default async function NewProductPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div>
-        <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 mb-2">
-          <Link href="/admin/products" className="hover:text-white transition">
+        <div className="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-2 font-medium">
+          <Link href="/admin/products" className="hover:text-zinc-950 transition">
             Catalogue
           </Link>
           <span>/</span>
-          <span className="text-cyan-400">New Product</span>
+          <span className="text-zinc-950 font-semibold">New Product</span>
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950">
           Add New Product
         </h1>
-        <p className="text-sm text-zinc-400 mt-1">
+        <p className="text-sm text-zinc-500 mt-1">
           Configure hardware specifications, gallery imagery, and pricing for the store.
         </p>
       </div>

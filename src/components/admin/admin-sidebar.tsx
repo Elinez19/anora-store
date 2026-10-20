@@ -62,7 +62,7 @@ export function AdminSidebar() {
       <button
         type="button"
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed bottom-5 right-5 z-50 p-3.5 rounded-full bg-zinc-950 text-white shadow-xl border border-zinc-800 flex items-center justify-center hover:scale-105 active:scale-95 transition-all"
+        className="lg:hidden fixed bottom-5 right-5 z-50 p-3.5 rounded-full bg-zinc-950 text-white shadow-2xl border border-zinc-800 flex items-center justify-center hover:scale-105 active:scale-95 transition-all"
         aria-label="Toggle navigation"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,40 +77,40 @@ export function AdminSidebar() {
       {/* Backdrop overlay on mobile */}
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          className="lg:hidden fixed inset-0 z-40 bg-zinc-950/40 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
-      {/* Main Sidebar Shell: Deep Obsidian Black with glossy highlight accents */}
+      {/* Main Sidebar Shell: Glossy Premium White with touch black active items */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-zinc-950 text-white border-r border-zinc-900/80 flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-white/85 backdrop-blur-2xl text-zinc-900 border-r border-zinc-200/80 shadow-[1px_0_30px_rgba(0,0,0,0.03)] flex flex-col transition-transform duration-300 ease-in-out ${
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         {/* Brand identity header */}
-        <div className="p-6 border-b border-zinc-900/80 flex items-center justify-between">
+        <div className="p-6 border-b border-zinc-100 flex items-center justify-between">
           <Link href="/admin" className="group flex items-center gap-3">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-white via-zinc-200 to-zinc-400 text-zinc-950 font-bold text-sm flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.25)] group-hover:scale-105 transition-transform">
+            <span className="w-8 h-8 rounded-xl bg-zinc-950 text-white font-extrabold text-sm flex items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.18)] ring-1 ring-zinc-800 group-hover:scale-105 transition-transform">
               A
             </span>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold tracking-wide text-white group-hover:text-zinc-200 transition-colors">
+              <span className="text-sm font-bold tracking-wider text-zinc-950 group-hover:text-zinc-700 transition-colors">
                 ANORAA
               </span>
-              <span className="text-[10px] tracking-wider uppercase font-mono text-zinc-400">
+              <span className="text-[10px] tracking-wider uppercase font-mono text-zinc-400 font-medium">
                 Control Studio
               </span>
             </div>
           </Link>
-          <span className="px-2 py-0.5 text-[10px] uppercase font-mono font-medium rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+          <span className="px-2 py-0.5 text-[10px] uppercase font-mono font-bold rounded-full bg-zinc-100 text-zinc-800 border border-zinc-200">
             PRO
           </span>
         </div>
 
         {/* Navigation list */}
         <nav className="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto">
-          <p className="px-3 pb-2 text-[10px] uppercase tracking-widest font-mono text-zinc-400">
+          <p className="px-3 pb-2 text-[10px] uppercase tracking-widest font-mono text-zinc-400 font-semibold">
             Management
           </p>
           {NAV_ITEMS.map((item) => {
@@ -124,24 +124,24 @@ export function AdminSidebar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={`group flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all ${
+                className={`group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs transition-all ${
                   isActive
-                    ? "bg-white text-zinc-950 shadow-[0_2px_10px_rgba(255,255,255,0.15)] font-semibold"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-900/70"
+                    ? "bg-zinc-950 text-white shadow-[0_4px_16px_rgba(0,0,0,0.15)] font-semibold"
+                    : "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/80 font-medium"
                 }`}
               >
                 <span
                   className={`${
                     isActive
-                      ? "text-zinc-950"
-                      : "text-zinc-400 group-hover:text-zinc-200 transition-colors"
+                      ? "text-white"
+                      : "text-zinc-400 group-hover:text-zinc-900 transition-colors"
                   }`}
                 >
                   {item.icon}
                 </span>
                 <span>{item.label}</span>
                 {isActive && (
-                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-500" />
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
                 )}
               </Link>
             );
@@ -149,11 +149,11 @@ export function AdminSidebar() {
         </nav>
 
         {/* Storefront return & footer info */}
-        <div className="p-4 border-t border-zinc-900/80 bg-zinc-950/60 backdrop-blur-md">
+        <div className="p-4 border-t border-zinc-100 bg-white/60 backdrop-blur-md">
           <Link
             href="/"
             target="_blank"
-            className="flex items-center justify-between px-3 py-2.5 rounded-lg text-xs text-zinc-400 hover:text-white hover:bg-zinc-900/90 transition-all border border-zinc-900"
+            className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/80 hover:border-zinc-300 transition-all border border-zinc-200/90 shadow-sm font-medium"
           >
             <div className="flex items-center gap-2">
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

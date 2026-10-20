@@ -171,7 +171,7 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
       )}
 
       {/* SECTION 1: Identity & Categorization */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-zinc-200 shadow-sm space-y-6">
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-zinc-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-6">
         <h2 className="text-lg font-bold text-zinc-950 font-sans tracking-tight">
           Product Identity & Category
         </h2>
@@ -266,7 +266,7 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
       </div>
 
       {/* SECTION 2: Pricing & Inventory */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-zinc-200 shadow-sm space-y-6">
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-zinc-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-6">
         <h2 className="text-lg font-bold text-zinc-950 font-sans tracking-tight">
           Pricing & Inventory
         </h2>
@@ -346,7 +346,7 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
       </div>
 
       {/* SECTION 3: Description & Technical Specs */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-zinc-200 shadow-sm space-y-6">
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-zinc-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-6">
         <h2 className="text-lg font-bold text-zinc-950 font-sans tracking-tight">
           Editorial Copy & Technical Specs
         </h2>
@@ -393,7 +393,7 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
       </div>
 
       {/* SECTION 4: Multi-Image Gallery Manager */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-zinc-200 shadow-sm space-y-6">
+      <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-zinc-200/80 shadow-[0_4px_25px_rgba(0,0,0,0.03),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold text-zinc-950 font-sans tracking-tight">
@@ -406,7 +406,7 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
           <button
             type="button"
             onClick={handleAddImage}
-            className="px-3.5 py-1.5 rounded-xl bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-800 transition"
+            className="px-4 py-2 rounded-xl bg-zinc-950 text-white text-xs font-semibold hover:bg-zinc-800 transition-all shadow-sm active:scale-[0.98]"
           >
             + Add Perspective Image
           </button>
@@ -476,14 +476,14 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-6 py-2.5 rounded-xl border border-zinc-300 text-zinc-700 text-sm font-medium hover:bg-zinc-100 transition"
+          className="px-6 py-2.5 rounded-xl bg-white border border-zinc-200/90 text-zinc-800 text-sm font-semibold hover:bg-zinc-950 hover:text-white hover:border-zinc-950 transition-all shadow-sm active:scale-[0.98]"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-8 py-2.5 rounded-xl bg-zinc-950 text-white text-sm font-semibold hover:bg-zinc-800 transition disabled:opacity-50 shadow-lg"
+          className="px-8 py-2.5 rounded-xl bg-zinc-950 text-white text-sm font-semibold hover:bg-zinc-800 transition-all disabled:opacity-50 shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_6px_22px_rgba(0,0,0,0.22)] active:scale-[0.98] border border-black/10"
         >
           {loading ? "Saving Product..." : initialData ? "Save Changes" : "Create Product"}
         </button>

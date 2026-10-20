@@ -17,7 +17,10 @@ export default async function AdminLayout({
   const admin = await requireAdmin("/admin");
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex font-sans antialiased selection:bg-cyan-500 selection:text-zinc-950">
+    <div className="min-h-screen bg-[#fafafc] text-zinc-900 flex font-sans antialiased selection:bg-zinc-950 selection:text-white relative">
+      {/* Ambient soft luminous gloss gradients */}
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(255,255,255,1),rgba(244,244,248,0.7))] -z-10" />
+
       {/* Permanent / Responsive Side Navigation */}
       <AdminSidebar />
 
@@ -31,7 +34,7 @@ export default async function AdminLayout({
           }}
         />
 
-        {/* Dynamic Page Container: Crisp glossy surfaces against deep obsidian background */}
+        {/* Dynamic Page Container: Crisp glossy white surfaces with touch black CTAs */}
         <main className="flex-1 p-6 sm:p-8 lg:p-10 max-w-[1600px] w-full mx-auto">
           {children}
         </main>

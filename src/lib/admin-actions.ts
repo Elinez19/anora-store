@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 import { db } from "@/db";
 import {
@@ -211,6 +211,33 @@ export async function deleteProductAction(
   } catch (error) {
     console.error("Failed to delete product", error);
     return { error: "Failed to delete product. It may be referenced in existing carts." };
+  }
+}
+
+/**
+ * Bulk delete products
+ */
+export async function deleteProductsAction(
+  productIds: string[],
+): Promise<ActionResponse> {
+  await requireAdmin();
+
+  if (!productIds || productIds.length === 0) {
+    return { error: "No products selected." };
+  }
+
+  try {
+    await db.delete(products).where(inArray(products.id, productIds));
+    revalidatePath("/admin/products");
+    revalidatePath("/admin");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to delete products", error);
+    return {
+      error:
+        "Failed to delete selected products. Some items may be referenced in existing records.",
+    };
   }
 }
 
