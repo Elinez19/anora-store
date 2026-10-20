@@ -14,9 +14,12 @@ import {
 import { db } from "@/db";
 import {
   categories,
+  newsletterSubscribers,
   orders,
   productImages,
   products,
+  supportReplies,
+  supportTickets,
   user,
 } from "@/db/schema";
 import { stockState } from "@/lib/stock";
@@ -312,3 +315,81 @@ export async function getAdminCustomers(params?: { search?: string }) {
     (u) => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q),
   );
 }
+
+/**
+ * Fetch all support tickets with optional status & search filtering
+ */
+export async function getAdminSupportTickets(params?: {
+  status?: string;
+  source?: string;
+  search?: string;
+}) {
+  const whereClauses = [];
+
+  if (params?.status && params.status !== "all") {
+    whereClauses.push(eq(supportTickets.status, params.status));
+  }
+  if (params?.source && params.source !== "all") {
+    whereClauses.push(eq(supportTickets.source, params.source));
+  }
+  if (params?.search) {
+    const q = `%${params.search.trim()}%`;
+    whereClauses.push(
+      or(
+        ilike(supportTickets.ticketNumber, q),
+        ilike(supportTickets.fromEmail, q),
+        ilike(supportTickets.subject, q),
+      ),
+    );
+  }
+
+  const tickets = await db.query.supportTickets.findMany({
+    where: whereClauses.length > 0 ? and(...whereClauses) : undefined,
+    orderBy: [desc(supportTickets.createdAt)],
+    with: {
+      replies: {
+        orderBy: [desc(supportReplies.createdAt)],
+      },
+    },
+  });
+
+  return tickets;
+}
+
+/**
+ * Fetch a single support ticket by ID with full reply thread
+ */
+export async function getAdminSupportTicketById(id: string) {
+  const ticket = await db.query.supportTickets.findFirst({
+    where: eq(supportTickets.id, id),
+    with: {
+      replies: {
+        orderBy: [asc(supportReplies.createdAt)],
+      },
+    },
+  });
+
+  return ticket;
+}
+
+/**
+ * Fetch marketing subscribers and overview metrics
+ */
+export async function getAdminMarketingOverview() {
+  const subscribers = await db
+    .select()
+    .from(newsletterSubscribers)
+    .orderBy(desc(newsletterSubscribers.createdAt));
+
+  const total = subscribers.length;
+  const active = subscribers.filter((s) => s.status === "subscribed").length;
+  const unsubscribed = total - active;
+
+  return {
+    total,
+    active,
+    unsubscribed,
+    subscribers,
+  };
+}
+

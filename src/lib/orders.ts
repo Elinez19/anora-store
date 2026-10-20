@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { BatchItem } from "drizzle-orm/batch";
-import { and, asc, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 
 import { db } from "@/db";
@@ -12,8 +12,10 @@ import {
   productImages,
   products,
 } from "@/db/schema";
-import { bachs } from "@/lib/bachs";
+import { bachs, appUrl } from "@/lib/bachs";
 import { getBag } from "@/lib/cart";
+import { formatCents } from "@/lib/format";
+import { sendOrderReceiptEmail } from "@/lib/resend";
 
 /**
  * Order fulfillment for Bachs Checkout.
@@ -167,6 +169,30 @@ export async function fulfillBachsCheckout(options: FulfillBachsOptions): Promis
   try {
     await db.batch(statements);
     console.info("Bachs order fulfilled successfully", { orderId, checkoutId });
+
+    // Send order confirmation email via Resend (fire-and-forget so payment response is not delayed)
+    if (email && email !== "unknown") {
+      void sendOrderReceiptEmail({
+        orderId,
+        customerName:
+          session.customer?.name ??
+          session.customer_details?.name ??
+          undefined,
+        email,
+        items: lines.map((l) => ({
+          name: l.name,
+          colour: l.colour,
+          quantity: l.quantity,
+          unitPriceFormatted: formatCents(l.unitPriceCents),
+          lineTotalFormatted: formatCents(l.lineTotalCents),
+          imageUrl: l.imageUrl,
+        })),
+        totalFormatted: formatCents(chargedCents),
+        viewOrderUrl: `${appUrl()}/account`,
+      }).catch((err) => {
+        console.error("Failed to send order confirmation email via Resend:", err);
+      });
+    }
   } catch (error) {
     if (isUniqueViolation(error)) {
       console.info("Order already fulfilled concurrently", checkoutId);
@@ -175,3 +201,4 @@ export async function fulfillBachsCheckout(options: FulfillBachsOptions): Promis
     throw error;
   }
 }
+

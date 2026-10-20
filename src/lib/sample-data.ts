@@ -45,11 +45,11 @@ export const footerNav = [
   {
     heading: "Support & Services",
     links: [
-      { label: "Track Your Order", href: "#" },
-      { label: "Warranty & Repairs", href: "#" },
-      { label: "Shipping Policies", href: "#" },
-      { label: "Returns & Exchanges", href: "#" },
-      { label: "Corporate Orders", href: "#" },
+      { label: "Track Your Order", href: "/account" },
+      { label: "Warranty & Repairs", href: "/contact" },
+      { label: "Shipping Policies", href: "/contact" },
+      { label: "Returns & Exchanges", href: "/contact" },
+      { label: "Corporate Orders", href: "/contact" },
     ],
   },
   {
@@ -59,7 +59,7 @@ export const footerNav = [
       { label: "Certified Grade-A Guarantee", href: "#" },
       { label: "Store Locations", href: "#" },
       { label: "Customer Reviews", href: "#" },
-      { label: "Contact Us", href: "#" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
   {

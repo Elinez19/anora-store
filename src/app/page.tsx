@@ -10,7 +10,7 @@ import {
   getNewArrivals,
   getProductsByCategory,
 } from "@/lib/products";
-import { subscribeToNewsletter } from "@/lib/newsletter";
+import { NewsletterSignupForm } from "@/components/newsletter-signup-form";
 import { hero, services } from "@/lib/sample-data";
 
 /** Rebuild at most every five minutes so catalogue edits land without a deploy. */
@@ -232,23 +232,7 @@ export default async function Home() {
                 Receive weekly inventory alerts on certified grade-A laptops, desk upgrades, and tech launches.
               </p>
 
-              <form className="mt-6 flex flex-col sm:flex-row gap-3" action={subscribeToNewsletter}>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="Enter your email address"
-                  className="flex-1 rounded-md border border-neutral-300 bg-white px-3.5 py-2.5 text-xs text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="rounded-md bg-neutral-950 px-6 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-neutral-800 transition-colors"
-                >
-                  Subscribe
-                </button>
-              </form>
+              <NewsletterSignupForm />
             </div>
           </div>
         </section>

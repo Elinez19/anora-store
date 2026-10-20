@@ -50,10 +50,34 @@ function requireAuthSecret(): string {
   return secret;
 }
 
+import {
+  sendEmailVerificationEmail,
+  sendPasswordResetEmail,
+} from "./resend";
+
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", schema }),
   secret: requireAuthSecret(),
   baseURL: process.env.BETTER_AUTH_URL,
-  emailAndPassword: { enabled: true },
+  emailAndPassword: {
+    enabled: true,
+    sendResetPassword: async ({ user, url }) => {
+      await sendPasswordResetEmail({
+        email: user.email,
+        name: user.name,
+        url,
+      });
+    },
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendEmailVerificationEmail({
+        email: user.email,
+        name: user.name,
+        url,
+      });
+    },
+  },
   plugins: [nextCookies()],
 });
+

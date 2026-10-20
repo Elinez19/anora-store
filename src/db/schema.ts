@@ -352,3 +352,84 @@ export const productImagesRelations = relations(productImages, ({ one }) => ({
     references: [products.id],
   }),
 }));
+
+/* ------------------------------------------------------------------------ *
+ * Newsletter & Email Marketing
+ * ------------------------------------------------------------------------ */
+
+export const newsletterSubscribers = pgTable("newsletter_subscribers", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(),
+  resendContactId: text("resend_contact_id"),
+  status: text("status").default("subscribed").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+/* ------------------------------------------------------------------------ *
+ * Support Tickets & Inbound Emails
+ * ------------------------------------------------------------------------ */
+
+export const supportTickets = pgTable(
+  "support_tickets",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    ticketNumber: text("ticket_number").notNull().unique(),
+    source: text("source").default("contact_form").notNull(), // 'contact_form' | 'inbound_email'
+    fromEmail: text("from_email").notNull(),
+    fromName: text("from_name"),
+    toEmail: text("to_email"),
+    subject: text("subject").notNull(),
+    message: text("message").notNull(),
+    html: text("html"),
+    category: text("category").default("general").notNull(),
+    orderNumber: text("order_number"),
+    resendEmailId: text("resend_email_id"),
+    status: text("status").default("open").notNull(), // 'open' | 'in_progress' | 'resolved' | 'closed'
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    index("support_tickets_status_idx").on(table.status),
+    index("support_tickets_created_at_idx").on(table.createdAt.desc()),
+    index("support_tickets_from_email_idx").on(table.fromEmail),
+  ],
+);
+
+export const supportReplies = pgTable(
+  "support_replies",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    ticketId: uuid("ticket_id")
+      .notNull()
+      .references(() => supportTickets.id, { onDelete: "cascade" }),
+    senderRole: text("sender_role").default("admin").notNull(), // 'admin' | 'customer'
+    senderEmail: text("sender_email").notNull(),
+    message: text("message").notNull(),
+    resendEmailId: text("resend_email_id"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [index("support_replies_ticket_id_idx").on(table.ticketId)],
+);
+
+export const supportTicketsRelations = relations(supportTickets, ({ many }) => ({
+  replies: many(supportReplies),
+}));
+
+export const supportRepliesRelations = relations(supportReplies, ({ one }) => ({
+  ticket: one(supportTickets, {
+    fields: [supportReplies.ticketId],
+    references: [supportTickets.id],
+  }),
+}));
+
