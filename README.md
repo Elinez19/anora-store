@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <a href="https://github.com/Elinez19/anora-store">
-    <img src="public/readme/readme-hero.webp" alt="Anoralite Store Banner" width="100%" style="border-radius: 8px;">
+    <img src="public/readme/banner.png" alt="Anoralite Store Banner" width="100%" style="border-radius: 8px;">
   </a>
   <br />
   <br />
